@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////
-// Program: jf
+// Program: jsonfiddle
 // Purpose: JSON Fiddling
 // Authors: Tong Sun (c) 2017, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
@@ -15,23 +15,23 @@ import (
 // Constant and data type/structure definitions
 
 //==========================================================================
-// jf
+// jsonfiddle
 
 type rootT struct {
 	cli.Helper
 	Prefix  string      `cli:"prefix" usage:"prefix for json string output"`
-	Indent  string      `cli:"indent" usage:"indent for json string output" dft:"  "`
+	Indent  string      `cli:"indent" usage:"indent for json string output" dft:" "`
 	Compact bool        `cli:"c,compact" usage:"Compact JSON data, remove all whitespaces"`
 	Verbose cli.Counter `cli:"v,verbose" usage:"Verbose mode (Multiple -v options increase the verbosity.)"`
 }
 
 var root = &cli.Command{
-	Name:   "jf",
+	Name:   "jsonfiddle",
 	Desc:   "JSON Fiddling\nbuilt on " + buildTime,
 	Text:   "Tool to fiddle with json strings",
 	Global: true,
 	Argv:   func() interface{} { return new(rootT) },
-	Fn:     jf,
+	Fn:     jsonfiddle,
 
 	NumArg: cli.AtLeast(1),
 }
@@ -41,7 +41,7 @@ var root = &cli.Command{
 // Global variables definitions
 
 //  var (
-//          progname  = "jf"
+//          progname  = "jsonfiddle"
 //          VERSION   = "0.1.0"
 //          buildTime = "2017-07-13"
 //  )
@@ -67,7 +67,7 @@ var root = &cli.Command{
 //==========================================================================
 // Main dispatcher
 
-//  func jf(ctx *cli.Context) error {
+//  func jsonfiddle(ctx *cli.Context) error {
 //  	ctx.JSON(ctx.RootArgv())
 //  	ctx.JSON(ctx.Argv())
 //  	fmt.Println()

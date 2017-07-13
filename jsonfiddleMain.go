@@ -29,7 +29,7 @@ type OptsT struct {
 // Global variables definitions
 
 var (
-	progname  = "jf"
+	progname  = "jsonfiddle"
 	VERSION   = "0.1.0"
 	buildTime = "2017-07-13"
 )
@@ -56,7 +56,7 @@ func main() {
 //==========================================================================
 // Main dispatcher
 
-func jf(ctx *cli.Context) error {
+func jsonfiddle(ctx *cli.Context) error {
 	ctx.JSON(ctx.RootArgv())
 	ctx.JSON(ctx.Argv())
 	fmt.Println()
