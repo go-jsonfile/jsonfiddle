@@ -89,7 +89,7 @@ var root = &cli.Command{
 
 type sortT struct {
 	Filei *clix.Reader `cli:"*i,input" usage:"The source to get json string from (mandatory)"`
-	Fileo *clix.Writer `cli:"o,output" usage:"The output (for stdout, use \"-\")"`
+	Fileo *clix.Writer `cli:"o,output" usage:"The output (default: stdout)"`
 }
 
 var sortDef = &cli.Command{

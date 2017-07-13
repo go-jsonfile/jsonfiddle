@@ -52,6 +52,6 @@ Command:
       - Name: Fileo
         Type: '*clix.Writer'
         Flag: o,output
-        Usage: 'The output (for stdout, use \"-\")'
+        Usage: 'The output (default: stdout)'
 
 
