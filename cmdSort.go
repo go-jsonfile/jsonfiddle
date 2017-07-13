@@ -32,7 +32,12 @@ func cmdSort(r io.Reader, w io.Writer) error {
 	content, err := ioutil.ReadAll(r)
 	abortOn("Reading input", err)
 	json.Unmarshal(content, &res)
-	js, err := json.MarshalIndent(res, Opts.Prefix, Opts.Indent)
+	var js []byte
+	if Opts.Compact {
+		js, err = json.Marshal(res)
+	} else {
+		js, err = json.MarshalIndent(res, Opts.Prefix, Opts.Indent)
+	}
 	abortOn("Marshaling input", err)
 	fmt.Fprintln(w, string(js))
 	return nil

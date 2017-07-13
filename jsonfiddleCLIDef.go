@@ -20,7 +20,7 @@ import (
 type rootT struct {
 	cli.Helper
 	Prefix  string      `cli:"prefix" usage:"prefix for json string output"`
-	Indent  string      `cli:"indent" usage:"indent for json string output" dft:" "`
+	Indent  string      `cli:"d,indent" usage:"indent for json string output" dft:" "`
 	Compact bool        `cli:"c,compact" usage:"Compact JSON data, remove all whitespaces"`
 	Verbose cli.Counter `cli:"v,verbose" usage:"Verbose mode (Multiple -v options increase the verbosity.)"`
 }

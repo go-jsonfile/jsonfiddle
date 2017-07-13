@@ -22,7 +22,7 @@ Options:
 
   - Name: Indent
     Type: string
-    Flag: 'indent'
+    Flag: 'd,indent'
     Usage: indent for json string output
     Value: ' '
 
