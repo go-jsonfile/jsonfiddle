@@ -16,6 +16,16 @@ import (
 )
 
 ////////////////////////////////////////////////////////////////////////////
+// Constant and data type/structure definitions
+
+type OptsT struct {
+	Prefix  string
+	Indent  string
+	Compact bool
+	Verbose int
+}
+
+////////////////////////////////////////////////////////////////////////////
 // Global variables definitions
 
 var (
@@ -24,7 +34,10 @@ var (
 	buildTime = "2017-07-13"
 )
 
-var rootArgv *rootT
+var (
+	rootArgv *rootT
+	Opts     OptsT
+)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
@@ -49,4 +62,22 @@ func jf(ctx *cli.Context) error {
 	fmt.Println()
 
 	return nil
+}
+
+//==========================================================================
+// support functions
+
+// abortOn will quit on anticipated errors gracefully without stack trace
+func abortOn(errCase string, e error) {
+	if e != nil {
+		fmt.Fprintf(os.Stderr, "[%s] %s error: %v\n", progname, errCase, e)
+		os.Exit(1)
+	}
+}
+
+// verbose will print info to stderr according to the verbose level setting
+func verbose(levelSet, levelNow int, format string, args ...interface{}) {
+	if levelNow >= levelSet {
+		fmt.Fprintf(os.Stderr, "["+progname+"] "+format+"\n", args...)
+	}
 }

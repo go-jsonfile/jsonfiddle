@@ -98,6 +98,5 @@ var sortDef = &cli.Command{
 	Argv: func() interface{} { return new(sortT) },
 	Fn:   sortCLI,
 
-	NumArg:      cli.AtLeast(1),
-	CanSubRoute: true,
+	NumOption: cli.AtLeast(1),
 }
