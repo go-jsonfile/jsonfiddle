@@ -57,6 +57,7 @@ var root = &cli.Command{
 //  	//NOTE: You can set any writer implements io.Writer
 //  	// default writer is os.Stdout
 //  	if err := cli.Root(root,
+//  		cli.Tree(fmtDef),
 //  		cli.Tree(sortDef),
 //  		cli.Tree(j2sDef)).Run(os.Args[1:]); err != nil {
 //  		fmt.Fprintln(os.Stderr, err)
@@ -77,6 +78,30 @@ var root = &cli.Command{
 //  }
 
 // Template for CLI handling starts here
+
+////////////////////////////////////////////////////////////////////////////
+// fmt
+
+//  func fmtCLI(ctx *cli.Context) error {
+//  	rootArgv = ctx.RootArgv().(*rootT)
+//  	argv := ctx.Argv().(*fmtT)
+//  	fmt.Printf("[fmt]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	return nil
+//  }
+
+type fmtT struct {
+	Filei *clix.Reader `cli:"*i,input" usage:"the source to get json string from (mandatory)"`
+	Fileo *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
+}
+
+var fmtDef = &cli.Command{
+	Name: "fmt",
+	Desc: "Formet json string",
+	Argv: func() interface{} { return new(fmtT) },
+	Fn:   fmtCLI,
+
+	NumOption: cli.AtLeast(1),
+}
 
 ////////////////////////////////////////////////////////////////////////////
 // sort
