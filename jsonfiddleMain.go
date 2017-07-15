@@ -11,6 +11,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/mkideal/cli"
 )
@@ -67,6 +68,14 @@ func jsonfiddle(ctx *cli.Context) error {
 
 //==========================================================================
 // support functions
+
+func Basename(s string) string {
+	n := strings.LastIndexByte(s, '.')
+	if n > 0 {
+		return s[:n]
+	}
+	return s
+}
 
 // abortOn will quit on anticipated errors gracefully without stack trace
 func abortOn(errCase string, e error) {
