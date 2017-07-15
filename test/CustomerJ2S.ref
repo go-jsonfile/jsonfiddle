@@ -1,0 +1,18 @@
+package main
+
+type Customer struct {
+	Address struct {
+		City          string `json:"city"`
+		PostalCode    string `json:"postalCode"`
+		State         string `json:"state"`
+		StreetAddress string `json:"streetAddress"`
+	} `json:"address"`
+	Age         int64  `json:"age"`
+	FirstName   string `json:"firstName"`
+	LastName    string `json:"lastName"`
+	PhoneNumber []struct {
+		Number string `json:"number"`
+		Type   string `json:"type"`
+	} `json:"phoneNumber"`
+}
+

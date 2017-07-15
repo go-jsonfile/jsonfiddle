@@ -1,0 +1,11 @@
+package main
+
+type MenuItems struct {
+	Menu struct {
+		Header string `json:"header"`
+		Items  []struct {
+			ID string `json:"id"`
+		} `json:"items"`
+	} `json:"menu"`
+}
+
