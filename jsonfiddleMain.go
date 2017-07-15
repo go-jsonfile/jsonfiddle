@@ -47,7 +47,8 @@ func main() {
 	//NOTE: You can set any writer implements io.Writer
 	// default writer is os.Stdout
 	if err := cli.Root(root,
-		cli.Tree(sortDef)).Run(os.Args[1:]); err != nil {
+		cli.Tree(sortDef),
+		cli.Tree(j2sDef)).Run(os.Args[1:]); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 	}
 	fmt.Println("")

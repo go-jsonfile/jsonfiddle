@@ -43,7 +43,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "jsonfiddle"
 //          VERSION   = "0.1.0"
-//          buildTime = "2017-07-13"
+//          buildTime = "2017-07-15"
 //  )
 
 //  var rootArgv *rootT
@@ -57,7 +57,8 @@ var root = &cli.Command{
 //  	//NOTE: You can set any writer implements io.Writer
 //  	// default writer is os.Stdout
 //  	if err := cli.Root(root,
-//  		cli.Tree(sortDef)).Run(os.Args[1:]); err != nil {
+//  		cli.Tree(sortDef),
+//  		cli.Tree(j2sDef)).Run(os.Args[1:]); err != nil {
 //  		fmt.Fprintln(os.Stderr, err)
 //  	}
 //  	fmt.Println("")
@@ -88,8 +89,8 @@ var root = &cli.Command{
 //  }
 
 type sortT struct {
-	Filei *clix.Reader `cli:"*i,input" usage:"The source to get json string from (mandatory)"`
-	Fileo *clix.Writer `cli:"o,output" usage:"The output (default: stdout)"`
+	Filei *clix.Reader `cli:"*i,input" usage:"the source to get json string from (mandatory)"`
+	Fileo *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
 }
 
 var sortDef = &cli.Command{
@@ -97,6 +98,34 @@ var sortDef = &cli.Command{
 	Desc: "Sort json fields recursive",
 	Argv: func() interface{} { return new(sortT) },
 	Fn:   sortCLI,
+
+	NumOption: cli.AtLeast(1),
+}
+
+////////////////////////////////////////////////////////////////////////////
+// j2s
+
+//  func j2sCLI(ctx *cli.Context) error {
+//  	rootArgv = ctx.RootArgv().(*rootT)
+//  	argv := ctx.Argv().(*j2sT)
+//  	fmt.Printf("[j2s]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	return nil
+//  }
+
+type j2sT struct {
+	FmtType   string       `cli:"f,fmt" usage:"the structural format of the input data (json/yaml)" dft:"json"`
+	Filei     *clix.Reader `cli:"*i,input" usage:"the source of the input JSON (mandatory)"`
+	Fileo     *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
+	Name      string       `cli:"name" usage:"the name of the root struct (default: as input file name)"`
+	Pkg       string       `cli:"pkg" usage:"the name of the package for the generated code" dft:"main"`
+	SubStruct bool         `cli:"subStruct" usage:"create types for sub-structs"`
+}
+
+var j2sDef = &cli.Command{
+	Name: "j2s",
+	Desc: "json to struct",
+	Argv: func() interface{} { return new(j2sT) },
+	Fn:   j2sCLI,
 
 	NumOption: cli.AtLeast(1),
 }

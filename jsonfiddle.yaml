@@ -47,11 +47,58 @@ Command:
       - Name: Filei
         Type: '*clix.Reader'
         Flag: '*i,input'
-        Usage: The source to get json string from (mandatory)
+        Usage: the source to get json string from (mandatory)
 
       - Name: Fileo
         Type: '*clix.Writer'
         Flag: o,output
-        Usage: 'The output (default: stdout)'
+        Usage: 'the output (default: stdout)'
 
+  - Name: j2s
+    Desc: "json to struct"
+    NumOption: cli.AtLeast(1)
 
+    Options:
+
+      - Name: FmtType
+        Type: string
+        Flag: f,fmt
+        Usage: the structural format of the input data (json/yaml)
+        Value: json
+
+      - Name: Filei
+        Type: '*clix.Reader'
+        Flag: '*i,input'
+        Usage: the source of the input JSON (mandatory)
+
+      - Name: Fileo
+        Type: '*clix.Writer'
+        Flag: o,output
+        Usage: 'the output (default: stdout)'
+
+      - Name: Name
+        Type: string
+        Flag: name
+        Usage: 'the name of the root struct (default: as input file name)'
+
+      - Name: Pkg
+        Type: string
+        Flag: pkg
+        Usage: the name of the package for the generated code
+        Value: main
+
+      - Name: SubStruct
+        Type: bool
+        Flag: subStruct
+        Usage: create types for sub-structs
+
+      # - Name: tags
+      #   Type: string
+      #   Flag: tags
+      #   Usage: comma seperated list of the tags to put on the struct, default is the same as fmt
+      #   Value: fmt
+
+      # - Name: ForceFloats
+      #   Type: bool
+      #   Flag: forcefloats
+      #   Usage: [experimental] force float64 type for integral values
