@@ -30,7 +30,7 @@ func sortCLI(ctx *cli.Context) error {
 func cmdSort(r io.Reader, w io.Writer) error {
 	var res interface{}
 	content, err := ioutil.ReadAll(r)
-	abortOn("Reading input", err)
+	abortOn("[::sort] Reading input", err)
 	json.Unmarshal(content, &res)
 	var js []byte
 	if Opts.Compact {
@@ -38,7 +38,7 @@ func cmdSort(r io.Reader, w io.Writer) error {
 	} else {
 		js, err = json.MarshalIndent(res, Opts.Prefix, Opts.Indent)
 	}
-	abortOn("Marshaling input", err)
+	abortOn("[::sort] Marshaling input", err)
 	fmt.Fprintln(w, string(js))
 	return nil
 }

@@ -23,14 +23,15 @@ func fmtCLI(ctx *cli.Context) error {
 
 	data, err := ioutil.ReadAll(argv.Filei)
 	argv.Filei.Close()
-	abortOn("Reading input", err)
+	abortOn("[::fmt] Reading input", err)
 
 	var out bytes.Buffer
 	if Opts.Compact {
-		json.Compact(&out, data)
+		err = json.Compact(&out, data)
 	} else {
-		json.Indent(&out, data, Opts.Prefix, Opts.Indent)
+		err = json.Indent(&out, data, Opts.Prefix, Opts.Indent)
 	}
+	abortOn("[::fmt] Formatting input", err)
 	out.WriteTo(argv.Fileo)
 
 	return nil
