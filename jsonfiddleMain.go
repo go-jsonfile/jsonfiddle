@@ -19,6 +19,7 @@ import (
 ////////////////////////////////////////////////////////////////////////////
 // Constant and data type/structure definitions
 
+// The OptsT type defines all the configurable options for jsonfiddle.
 type OptsT struct {
 	Prefix  string
 	Indent  string
@@ -30,14 +31,16 @@ type OptsT struct {
 // Global variables definitions
 
 var (
-	progname  = "jsonfiddle"
+	progname = "jsonfiddle"
+	// VERSION tracks the release version.
 	VERSION   = "0.1.0"
 	buildTime = "2017-07-13"
 )
 
 var (
 	rootArgv *rootT
-	Opts     OptsT
+	// Opts store all the configurable options for jsonfiddle.
+	Opts OptsT
 )
 
 ////////////////////////////////////////////////////////////////////////////
@@ -70,6 +73,7 @@ func jsonfiddle(ctx *cli.Context) error {
 //==========================================================================
 // support functions
 
+// Basename returns the file name without extension.
 func Basename(s string) string {
 	n := strings.LastIndexByte(s, '.')
 	if n > 0 {
