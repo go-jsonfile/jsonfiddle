@@ -19,9 +19,9 @@ import (
 
 type rootT struct {
 	cli.Helper
+	Compact bool        `cli:"c,compact" usage:"Compact JSON data, remove all whitespaces"`
 	Prefix  string      `cli:"prefix" usage:"prefix for json string output"`
 	Indent  string      `cli:"d,indent" usage:"indent for json string output" dft:" "`
-	Compact bool        `cli:"c,compact" usage:"Compact JSON data, remove all whitespaces"`
 	Verbose cli.Counter `cli:"v,verbose" usage:"Verbose mode (Multiple -v options increase the verbosity.)"`
 }
 
@@ -148,7 +148,7 @@ type j2sT struct {
 
 var j2sDef = &cli.Command{
 	Name: "j2s",
-	Desc: "json to struct",
+	Desc: "JSON to struct",
 	Argv: func() interface{} { return new(j2sT) },
 	Fn:   j2sCLI,
 

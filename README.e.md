@@ -97,3 +97,9 @@ All patches welcome.
 
 All the following similar projects have been considered before writing one on my own instead.
 
+## Author(s) & Contributor(s)
+
+Tong SUN  
+![suntong from cpan.org](https://img.shields.io/badge/suntong-%40cpan.org-lightgrey.svg "suntong from cpan.org")
+
+All patches welcome. 

@@ -14,6 +14,11 @@ NumArg: cli.AtLeast(1)
 
 Options:
 
+  - Name: Compact
+    Type: bool
+    Flag: 'c,compact'
+    Usage: Compact JSON data, remove all whitespaces
+
   - Name: Prefix
     Type: string
     Flag: 'prefix'
@@ -25,11 +30,6 @@ Options:
     Flag: 'd,indent'
     Usage: indent for json string output
     Value: ' '
-
-  - Name: Compact
-    Type: bool
-    Flag: 'c,compact'
-    Usage: Compact JSON data, remove all whitespaces
 
   - Name: Verbose
     Type: cli.Counter
@@ -71,7 +71,7 @@ Command:
         Usage: 'the output (default: stdout)'
 
   - Name: j2s
-    Desc: "json to struct"
+    Desc: "JSON to struct"
     NumOption: cli.AtLeast(1)
 
     Options:

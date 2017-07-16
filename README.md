@@ -30,6 +30,7 @@
 - [Installation](#installation)
   - [Credits](#credits)
   - [Similar Projects](#similar-projects)
+  - [Author(s) & Contributor(s)](#author(s)-&-contributor(s))
 
 ## jsonfiddle - JSON Fiddling
 
@@ -51,16 +52,16 @@ Tool to fiddle with json strings
 Options:
 
   -h, --help         display help information
+  -c, --compact      Compact JSON data, remove all whitespaces
       --prefix       prefix for json string output
   -d, --indent[= ]   indent for json string output
-  -c, --compact      Compact JSON data, remove all whitespaces
   -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
 
 Commands:
 
   fmt    Format json string
   sort   Sort json fields recursively
-  j2s    json to struct
+  j2s    JSON to struct
 ```
 
 ### $ jsonfiddle fmt
@@ -70,9 +71,9 @@ Format json string
 Options:
 
   -h, --help         display help information
+  -c, --compact      Compact JSON data, remove all whitespaces
       --prefix       prefix for json string output
   -d, --indent[= ]   indent for json string output
-  -c, --compact      Compact JSON data, remove all whitespaces
   -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
   -i, --input       *the source to get json string from (mandatory)
   -o, --output       the output (default: stdout)
@@ -85,9 +86,9 @@ Sort json fields recursively
 Options:
 
   -h, --help         display help information
+  -c, --compact      Compact JSON data, remove all whitespaces
       --prefix       prefix for json string output
   -d, --indent[= ]   indent for json string output
-  -c, --compact      Compact JSON data, remove all whitespaces
   -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
   -i, --input       *the source to get json string from (mandatory)
   -o, --output       the output (default: stdout)
@@ -95,14 +96,14 @@ Options:
 
 ### $ jsonfiddle j2s
 ```sh
-json to struct
+JSON to struct
 
 Options:
 
   -h, --help         display help information
+  -c, --compact      Compact JSON data, remove all whitespaces
       --prefix       prefix for json string output
   -d, --indent[= ]   indent for json string output
-  -c, --compact      Compact JSON data, remove all whitespaces
   -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
   -f, --fmt[=json]   the structural format of the input data (json/yaml)
   -i, --input       *the source of the input JSON (mandatory)
@@ -253,3 +254,10 @@ All patches welcome.
 ## Similar Projects
 
 All the following similar projects have been considered before writing one on my own instead.
+
+## Author(s) & Contributor(s)
+
+Tong SUN  
+![suntong from cpan.org](https://img.shields.io/badge/suntong-%40cpan.org-lightgrey.svg "suntong from cpan.org")
+
+All patches welcome. 
