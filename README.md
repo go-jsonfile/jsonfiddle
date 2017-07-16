@@ -44,7 +44,7 @@ The `jsonfiddle` makes it easy to look at the JSON data from different aspects.
 ### $ jsonfiddle
 ```sh
 JSON Fiddling
-built on 2017-07-15
+built on 2017-07-16
 
 Tool to fiddle with json strings
 
@@ -58,14 +58,14 @@ Options:
 
 Commands:
 
-  fmt    Formet json string
-  sort   Sort json fields recursive
+  fmt    Format json string
+  sort   Sort json fields recursively
   j2s    json to struct
 ```
 
 ### $ jsonfiddle fmt
 ```sh
-Formet json string
+Format json string
 
 Options:
 
@@ -80,7 +80,7 @@ Options:
 
 ### $ jsonfiddle sort
 ```sh
-Sort json fields recursive
+Sort json fields recursively
 
 Options:
 
@@ -205,7 +205,7 @@ and the result is the same (and for all other examples using `-i` as well).
 	$ jsonfiddle j2s -i test/Customer.json
 
 #### > test/CustomerJ2S.ref
-```json
+```go
 package main
 
 type Customer struct {
@@ -233,7 +233,7 @@ A few more words on why I'm writing the tool -- because I need to compare JSON s
 Thus all the JSON comparison tools I found are failing under such hash request. So far, I personally find that
 
 - Sorting the JSON data fields recursively and producing plain text file (via `jsonfiddle sort`), then use the state-of-the-art text comparison tools to compare them is the best approach, for my above scenario.
-- For extremely long and very complicated JSONs, converting json to abstract Go struct is the quickest approach to compare them at higher level.
+- For extremely long and very complicated JSONs, converting json to abstract Go struct (via `jsonfiddle j2s`) is the quickest approach to compare them at higher level.
 
 
 # Installation

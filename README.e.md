@@ -66,7 +66,7 @@ and the result is the same (and for all other examples using `-i` as well).
 
 	$ jsonfiddle j2s -i test/Customer.json
 
-#### > {{cat "test/CustomerJ2S.ref" | color "json"}}
+#### > {{cat "test/CustomerJ2S.ref" | color "go"}}
 
 
 # Purpose
@@ -76,7 +76,7 @@ A few more words on why I'm writing the tool -- because I need to compare JSON s
 Thus all the JSON comparison tools I found are failing under such hash request. So far, I personally find that
 
 - Sorting the JSON data fields recursively and producing plain text file (via `jsonfiddle sort`), then use the state-of-the-art text comparison tools to compare them is the best approach, for my above scenario.
-- For extremely long and very complicated JSONs, converting json to abstract Go struct is the quickest approach to compare them at higher level.
+- For extremely long and very complicated JSONs, converting json to abstract Go struct (via `jsonfiddle j2s`) is the quickest approach to compare them at higher level.
 
 
 # Installation

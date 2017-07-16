@@ -43,7 +43,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "jsonfiddle"
 //          VERSION   = "0.1.0"
-//          buildTime = "2017-07-15"
+//          buildTime = "2017-07-16"
 //  )
 
 //  var rootArgv *rootT
@@ -96,7 +96,7 @@ type fmtT struct {
 
 var fmtDef = &cli.Command{
 	Name: "fmt",
-	Desc: "Formet json string",
+	Desc: "Format json string",
 	Argv: func() interface{} { return new(fmtT) },
 	Fn:   fmtCLI,
 
@@ -120,7 +120,7 @@ type sortT struct {
 
 var sortDef = &cli.Command{
 	Name: "sort",
-	Desc: "Sort json fields recursive",
+	Desc: "Sort json fields recursively",
 	Argv: func() interface{} { return new(sortT) },
 	Fn:   sortCLI,
 

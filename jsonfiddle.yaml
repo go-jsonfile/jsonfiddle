@@ -39,7 +39,7 @@ Options:
 Command:
 
   - Name: fmt
-    Desc: "Formet json string"
+    Desc: "Format json string"
     #NumArg: cli.AtLeast(1)
     NumOption: cli.AtLeast(1)
 
@@ -55,7 +55,7 @@ Command:
         Usage: 'the output (default: stdout)'
 
   - Name: sort
-    Desc: "Sort json fields recursive"
+    Desc: "Sort json fields recursively"
     #NumArg: cli.AtLeast(1)
     NumOption: cli.AtLeast(1)
 
