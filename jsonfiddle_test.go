@@ -62,16 +62,19 @@ func TestExec(t *testing.T) {
 
 	// == Test Basic Functions
 	// -- fmt
-	testIt(t, "Customer", "fmt", "-c", "-i", "Customer.json")
-	testIt(t, "CustomerI", "fmt", "-i", "Customer.json")
+	testIt(t, "CustomerC", "fmt", "-c", "-i", "Customer.json")
+	testIt(t, "Customer", "fmt", "-i", "Customer.json")
+	testIt(t, "Schedules", "fmt", "-i", "Schedules.json")
 	// -- sort
 	testIt(t, "CustomerSI", "sort", "-i", "Customer.json")
 	testIt(t, "CustomerSC", "sort", "-c", "-i", "Customer.json")
+	testIt(t, "SchedulesSI", "sort", "-i", "Schedules.json")
 	// -- j2s
 	testIt(t, "CustomerJ2S", "j2s", "-i", "Customer.json")
 	testIt(t, "GoodsJ2S", "j2s", "-i", "Goods.json")
 	testIt(t, "MenuItemsJ2S", "j2s", "-i", "MenuItems.json")
 	testIt(t, "SmartyStreetsJ2S", "j2s", "-i", "SmartyStreets.json")
+	testIt(t, "SchedulesJ2S", "j2s", "-i", "Schedules.json")
 
 	//Test String Functions
 

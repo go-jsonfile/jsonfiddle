@@ -1,0 +1,25 @@
+package main
+
+type Schedules struct {
+	DaysCfg struct {
+		DaysInPeriod   int64   `json:"DaysInPeriod"`
+		DaysToSchedule []int64 `json:"DaysToSchedule"`
+		Range          struct {
+			LowerDate string `json:"lowerDate"`
+			UpperDate string `json:"upperDate"`
+		} `json:"Range"`
+	} `json:"DaysCfg"`
+	DepartmentsID       []int64       `json:"DepartmentsID"`
+	EmployeesID         []int64       `json:"EmployeesID"`
+	EndDate             string        `json:"EndDate"`
+	IntervalSize        int64         `json:"IntervalSize"`
+	IsActivitiesEnabled bool          `json:"IsActivitiesEnabled"`
+	ModifyExisting      bool          `json:"ModifyExisting"`
+	OrignID             int64         `json:"OrignId"`
+	PrimaryOption       int64         `json:"PrimaryOption"`
+	ScheduleChanges     []interface{} `json:"ScheduleChanges"`
+	SchoolDays          []interface{} `json:"SchoolDays"`
+	StartDate           string        `json:"StartDate"`
+	ZonesToSchedule     []int64       `json:"ZonesToSchedule"`
+}
+
