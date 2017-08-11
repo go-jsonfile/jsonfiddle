@@ -2,7 +2,7 @@ language: go
 
 env:
   global:
-    - TRAVIS_TAG=v0.2.0
+#    - TRAVIS_TAG=v0.2.0
 
 install:
   - gem install fpm
@@ -13,6 +13,5 @@ script:
   - go test -v ./...
 
 after_success:
-#  - test -n "$TRAVIS_TAG" && curl -sL https://git.io/goreleaser | bash -x
-  - curl -sL https://git.io/goreleaser | bash -x
+  - test -n "$TRAVIS_TAG" && curl -sL https://git.io/goreleaser | bash -x
 
