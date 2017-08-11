@@ -2,7 +2,7 @@ language: go
 
 env:
   global:
-    - TRAVIS_TAG=v0.2.0
+#    - TRAVIS_TAG=v0.2.0
 
 install:
   - gem install fpm
