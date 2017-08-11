@@ -27,7 +27,7 @@ type rootT struct {
 
 var root = &cli.Command{
 	Name:   "jsonfiddle",
-	Desc:   "JSON Fiddling\nbuilt on " + buildTime,
+	Desc:   "JSON Fiddling\nbuilt on " + date,
 	Text:   "Tool to fiddle with json strings",
 	Global: true,
 	Argv:   func() interface{} { return new(rootT) },
@@ -43,7 +43,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "jsonfiddle"
 //          VERSION   = "0.1.0"
-//          buildTime = "2017-07-16"
+//          date = "2017-07-16"
 //  )
 
 //  var rootArgv *rootT

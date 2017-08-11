@@ -32,9 +32,9 @@ type OptsT struct {
 
 var (
 	progname = "jsonfiddle"
-	// VERSION tracks the release version.
-	VERSION   = "0.2.0"
-	buildTime = "2017-07-13"
+	// version tracks the release version.
+	version = "v0.2.0"
+	date    = "2017-07-13"
 )
 
 var (

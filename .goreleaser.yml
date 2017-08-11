@@ -1,0 +1,43 @@
+builds:
+  -
+    env:
+#      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - 386
+      - amd64
+    # List of combinations of GOOS + GOARCH + GOARM to ignore.
+    # Default is empty.
+    ignore:
+      - goos: darwin
+        goarch: 386
+      - goos: windows
+        goarch: 386
+
+archive:
+  name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}'
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+  format_overrides:
+    - goos: windows
+      format: zip
+
+fpm:
+  homepage:  https://github.com/go-jsonfile/jsonfiddle
+  description: JSON Fiddling, to look at the JSON data from different aspects.
+  maintainer: Tong Sun <suntong@cpan.org>
+  license: MIT
+  vendor: suntong
+  formats:
+    - deb
+    - rpm
+  dependencies:
+    - git
+
