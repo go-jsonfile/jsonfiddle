@@ -16,18 +16,20 @@
 - [Examples](#examples)
   - [Format with `jsonfiddle fmt`](#format-with-`jsonfiddle-fmt`)
     - [Pretty print](#pretty-print)
-      - [> test/CustomerI.ref](#-testcustomeriref)
+      - [> test/CustomerSI.ref](#-testcustomersiref)
     - [Compact](#compact)
       - [> test/Customer.ref](#-testcustomerref)
     - [Sort fields with `jsonfiddle sort`](#sort-fields-with-`jsonfiddle-sort`)
       - [Sort with pretty print](#sort-with-pretty-print)
-        - [> test/CustomerSI.ref](#-testcustomersiref)
+        - [> test/CustomerSI.ref](#-testcustomersiref-1)
       - [Sort in compact](#sort-in-compact)
         - [> test/CustomerSC.ref](#-testcustomerscref)
       - [JSON to struct via `jsonfiddle j2s`](#json-to-struct-via-`jsonfiddle-j2s`)
         - [> test/CustomerJ2S.ref](#-testcustomerj2sref)
 - [Purpose](#purpose)
-- [Installation](#installation)
+- [Download binaries](#download-binaries)
+- [Debian package](#debian-package)
+- [Install Source](#install-source)
   - [Credits](#credits)
   - [Similar Projects](#similar-projects)
   - [Author(s) & Contributor(s)](#author(s)-&-contributor(s))
@@ -45,7 +47,7 @@ The `jsonfiddle` makes it easy to look at the JSON data from different aspects.
 ### $ jsonfiddle
 ```sh
 JSON Fiddling
-built on 2017-07-16
+Version v0.2.0 built on 2017-08-12
 
 Tool to fiddle with json strings
 
@@ -121,7 +123,36 @@ Options:
 
 	$ jsonfiddle fmt -i test/Customer.json
 
-#### > test/CustomerI.ref
+#### > test/CustomerSI.ref
+```json
+{
+ "address": {
+  "city": "New York",
+  "postalCode": "10021",
+  "state": "NY",
+  "streetAddress": "21 2nd Street"
+ },
+ "age": 25,
+ "firstName": "John",
+ "lastName": "Smith",
+ "phoneNumber": [
+  {
+   "number": "212 555-1234",
+   "type": "home"
+  },
+  {
+   "number": "646 555-4567",
+   "type": "fax"
+  }
+ ]
+}
+```
+
+### Compact
+
+	$ jsonfiddle fmt -c -i test/Customer.json
+
+#### > test/Customer.ref
 ```json
 {
  "firstName": "John",
@@ -144,15 +175,6 @@ Options:
   }
  ]
 }
-```
-
-### Compact
-
-	$ jsonfiddle fmt -c -i test/Customer.json
-
-#### > test/Customer.ref
-```json
-{"firstName":"John","lastName":"Smith","age":25,"address":{"streetAddress":"21 2nd Street","city":"New York","state":"NY","postalCode":"10021"},"phoneNumber":[{"type":"home","number":"212 555-1234"},{"type":"fax","number":"646 555-4567"}]}
 ```
 
 You can also do,
@@ -236,14 +258,27 @@ Thus all the JSON comparison tools I found are failing under such hash request. 
 - Sorting the JSON data fields recursively and producing plain text file (via `jsonfiddle sort`), then use the state-of-the-art text comparison tools to compare them is the best approach, for my above scenario.
 - For extremely long and very complicated JSONs, converting json to abstract Go struct (via `jsonfiddle j2s`) is the quickest approach to compare them at higher level.
 
+# Download binaries
 
-# Installation
+- The latest binary executables are available under  
+https://github.com/go-jsonfile/jsonfiddle/releases  
+as the result of the Continuous-Integration process.
+- I.e., they are built right from the source code during every git tagging commit automatically by [travis-ci](https://travis-ci.org/).
+- Pick & choose the binary executable that suits your OS and its architecture. E.g., for Linux, it would most probably be the `jsonfiddle_linux_VER_amd64` file. If your OS and its architecture is not available in the download list, please let me know and I'll add it.
+- You may want to rename it to a shorter name instead, e.g., `jsonfiddle`, after downloading it. 
+
+
+# Debian package
+
+Available at the above releases url as well.
+
+# Install Source
+
+To install the source code instead:
 
 ```
 go get github.com/go-jsonfile/jsonfiddle
 ```
-
-All patches welcome.
 
 
 ## Credits

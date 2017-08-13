@@ -34,7 +34,7 @@ The `jsonfiddle` makes it easy to look at the JSON data from different aspects.
 
 	$ jsonfiddle fmt -i test/Customer.json
 
-#### > {{cat "test/CustomerI.ref" | color "json"}}
+#### > {{cat "test/CustomerSI.ref" | color "json"}}
 
 ### Compact
 
@@ -78,14 +78,27 @@ Thus all the JSON comparison tools I found are failing under such hash request. 
 - Sorting the JSON data fields recursively and producing plain text file (via `jsonfiddle sort`), then use the state-of-the-art text comparison tools to compare them is the best approach, for my above scenario.
 - For extremely long and very complicated JSONs, converting json to abstract Go struct (via `jsonfiddle j2s`) is the quickest approach to compare them at higher level.
 
+# Download binaries
 
-# Installation
+- The latest binary executables are available under  
+https://github.com/go-jsonfile/{{.Name}}/releases  
+as the result of the Continuous-Integration process.
+- I.e., they are built right from the source code during every git tagging commit automatically by [travis-ci](https://travis-ci.org/).
+- Pick & choose the binary executable that suits your OS and its architecture. E.g., for Linux, it would most probably be the `{{.Name}}_linux_VER_amd64` file. If your OS and its architecture is not available in the download list, please let me know and I'll add it.
+- You may want to rename it to a shorter name instead, e.g., `{{.Name}}`, after downloading it. 
+
+
+# Debian package
+
+Available at the above releases url as well.
+
+# Install Source
+
+To install the source code instead:
 
 ```
 go get github.com/go-jsonfile/jsonfiddle
 ```
-
-All patches welcome.
 
 
 ## Credits

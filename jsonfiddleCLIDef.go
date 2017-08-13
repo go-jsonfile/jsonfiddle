@@ -27,7 +27,7 @@ type rootT struct {
 
 var root = &cli.Command{
 	Name:   "jsonfiddle",
-	Desc:   "JSON Fiddling\nbuilt on " + date,
+	Desc:   "JSON Fiddling\nVersion " + version + " built on " + date,
 	Text:   "Tool to fiddle with json strings",
 	Global: true,
 	Argv:   func() interface{} { return new(rootT) },
@@ -42,8 +42,8 @@ var root = &cli.Command{
 
 //  var (
 //          progname  = "jsonfiddle"
-//          VERSION   = "0.1.0"
-//          date = "2017-07-16"
+//          version   = "0.1.0"
+//          date = "2017-08-12"
 //  )
 
 //  var rootArgv *rootT
@@ -97,6 +97,7 @@ type fmtT struct {
 var fmtDef = &cli.Command{
 	Name: "fmt",
 	Desc: "Format json string",
+
 	Argv: func() interface{} { return new(fmtT) },
 	Fn:   fmtCLI,
 
@@ -121,6 +122,7 @@ type sortT struct {
 var sortDef = &cli.Command{
 	Name: "sort",
 	Desc: "Sort json fields recursively",
+
 	Argv: func() interface{} { return new(sortT) },
 	Fn:   sortCLI,
 
@@ -149,6 +151,7 @@ type j2sT struct {
 var j2sDef = &cli.Command{
 	Name: "j2s",
 	Desc: "JSON to struct",
+
 	Argv: func() interface{} { return new(j2sT) },
 	Fn:   j2sCLI,
 

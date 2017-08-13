@@ -20,7 +20,7 @@ builds:
 archive:
   name_template: '{{ .Binary }}_{{ .Os }}_{{ .Version }}_{{ .Arch }}'
   replacements:
-    darwin: Darwin
+    # darwin: Darwin
     windows: Windows
     # linux: Linux
     # amd64: x86_64
