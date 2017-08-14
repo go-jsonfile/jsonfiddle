@@ -43,7 +43,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "jsonfiddle"
 //          version   = "0.1.0"
-//          date = "2017-08-12"
+//          date = "2017-08-14"
 //  )
 
 //  var rootArgv *rootT
@@ -57,6 +57,7 @@ var root = &cli.Command{
 //  	//NOTE: You can set any writer implements io.Writer
 //  	// default writer is os.Stdout
 //  	if err := cli.Root(root,
+//  		cli.Tree(escDef),
 //  		cli.Tree(fmtDef),
 //  		cli.Tree(sortDef),
 //  		cli.Tree(j2sDef)).Run(os.Args[1:]); err != nil {
@@ -78,6 +79,31 @@ var root = &cli.Command{
 //  }
 
 // Template for CLI handling starts here
+
+////////////////////////////////////////////////////////////////////////////
+// esc
+
+//  func escCLI(ctx *cli.Context) error {
+//  	rootArgv = ctx.RootArgv().(*rootT)
+//  	argv := ctx.Argv().(*escT)
+//  	fmt.Printf("[esc]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	return nil
+//  }
+
+type escT struct {
+	Filei *clix.Reader `cli:"*i,input" usage:"the source to get json string from (mandatory)"`
+	Fileo *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
+}
+
+var escDef = &cli.Command{
+	Name: "esc",
+	Desc: "Escape json string so as to embed it as content of json string",
+
+	Argv: func() interface{} { return new(escT) },
+	Fn:   escCLI,
+
+	NumOption: cli.AtLeast(1),
+}
 
 ////////////////////////////////////////////////////////////////////////////
 // fmt

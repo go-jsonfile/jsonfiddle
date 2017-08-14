@@ -38,6 +38,21 @@ Options:
 
 Command:
 
+  - Name: esc
+    Desc: "Escape json string so as to embed it as content of json string"
+    NumOption: cli.AtLeast(1)
+
+    Options:
+      - Name: Filei
+        Type: '*clix.Reader'
+        Flag: '*i,input'
+        Usage: the source to get json string from (mandatory)
+
+      - Name: Fileo
+        Type: '*clix.Writer'
+        Flag: o,output
+        Usage: 'the output (default: stdout)'
+
   - Name: fmt
     Desc: "Format json string"
     #NumArg: cli.AtLeast(1)

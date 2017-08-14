@@ -33,8 +33,8 @@ type OptsT struct {
 var (
 	progname = "jsonfiddle"
 	// version tracks the release version.
-	version = "v0.2.0"
-	date    = "2017-07-13"
+	version = "v0.3.0"
+	date    = "2017-08-16"
 )
 
 var (
@@ -51,6 +51,7 @@ func main() {
 	//NOTE: You can set any writer implements io.Writer
 	// default writer is os.Stdout
 	if err := cli.Root(root,
+		cli.Tree(escDef),
 		cli.Tree(fmtDef),
 		cli.Tree(sortDef),
 		cli.Tree(j2sDef)).Run(os.Args[1:]); err != nil {
