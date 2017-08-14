@@ -150,7 +150,7 @@ Options:
 `jsonfiddle esc` will escape any arbitrary string so as to embed it as content of json string. This seems useless at first, but it actually allows you to embed any arbitrary file into [GitHub Gists JSON API](https://developer.github.com/v3/gists/), so as to post any arbitrary file onto GitHub Gist:
 
 
-   echo '{"description":"SmartyStreets API Demo","public":true,"files":{"SmartyStreets.json":{"content":'"`jsonfiddle fmt -i test/SmartyStreets.json | jsonfiddle esc -i`"'}}}' | curl --data @- https://api.github.com/gists
+    echo '{"description":"SmartyStreets API Demo","public":true,"files":{"SmartyStreets.json":{"content":'"`jsonfiddle fmt -i test/SmartyStreets.json | jsonfiddle esc -i`"'}}}' | curl --data @- https://api.github.com/gists
 
 This will give you
 https://gist.github.com/anonymous/1423d4768dd9b88262ca513626e68d8e
