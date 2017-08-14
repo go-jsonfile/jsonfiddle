@@ -20,6 +20,8 @@ The `jsonfiddle` makes it easy to look at the JSON data from different aspects.
 
 ### $ {{exec "jsonfiddle" | color "sh"}}
 
+### $ {{shell "jsonfiddle esc" | color "sh"}}
+
 ### $ {{shell "jsonfiddle fmt" | color "sh"}}
 
 ### $ {{shell "jsonfiddle sort" | color "sh"}}
@@ -27,6 +29,26 @@ The `jsonfiddle` makes it easy to look at the JSON data from different aspects.
 ### $ {{shell "jsonfiddle j2s" | color "sh"}}
 
 # Examples
+
+## Escape with `jsonfiddle esc`
+
+### $ {{shell "jsonfiddle esc -i test/Customer.ref" | color "json"}}
+
+### Usage
+
+`jsonfiddle esc` will escape any arbitrary string so as to embed it as content of json string. This seems useless at first, but it actually allows you to embed any arbitrary file into [GitHub Gists JSON API](https://developer.github.com/v3/gists/), so as to post any arbitrary file onto GitHub Gist:
+
+
+   echo '{"description":"SmartyStreets API Demo","public":true,"files":{"SmartyStreets.json":{"content":'"`jsonfiddle fmt -i test/SmartyStreets.json | jsonfiddle esc -i`"'}}}' | curl --data @- https://api.github.com/gists
+
+This will give you
+https://gist.github.com/anonymous/1423d4768dd9b88262ca513626e68d8e
+
+
+By "_arbitrary file_" I do mean arbitrary file. Check this out:
+https://gist.github.com/anonymous/a51798ce99ff59d8d4ba536cbf4b6996
+
+This is why `jsonfiddle esc` is a command on its own, instead of being part of functionalities of `jsonfiddle fmt` or `jsonfiddle sort`.
 
 ## Format with `jsonfiddle fmt`
 
