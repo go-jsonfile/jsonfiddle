@@ -42,6 +42,7 @@
 
 The `jsonfiddle` makes it easy to look at the JSON data from different aspects. 
 
+- **`jsonfiddle esc`** will escape any arbitrary string so as to embed it as content of json string.
 - **`jsonfiddle fmt`** will format the JSON data, either compact it or pretty printing it. The order of fields are intact. 
 - **`jsonfiddle sort`** will sort the JSON data fields recursively, so that the attributes at any level are in sorted order.
 - **`jsonfiddle j2s`** means json to struct. It will extract the structure of JSON data as Go struct.
@@ -65,7 +66,7 @@ Options:
 
 Commands:
 
-  esc    Escape json string so as to embed it as content of json string
+  esc    Escape json string
   fmt    Format json string
   sort   Sort json fields recursively
   j2s    JSON to struct
@@ -73,7 +74,7 @@ Commands:
 
 ### $ jsonfiddle esc
 ```sh
-Escape json string so as to embed it as content of json string
+Escape json string
 
 Options:
 

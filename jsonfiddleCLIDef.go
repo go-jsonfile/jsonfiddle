@@ -97,7 +97,7 @@ type escT struct {
 
 var escDef = &cli.Command{
 	Name: "esc",
-	Desc: "Escape json string so as to embed it as content of json string",
+	Desc: "Escape json string",
 
 	Argv: func() interface{} { return new(escT) },
 	Fn:   escCLI,
