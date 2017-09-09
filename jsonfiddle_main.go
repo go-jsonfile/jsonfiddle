@@ -6,7 +6,7 @@
 
 package main
 
-//go:generate sh -v jsonfiddleCLIGen.sh
+//go:generate sh -v jsonfiddle_cliGen.sh
 
 import (
 	"fmt"

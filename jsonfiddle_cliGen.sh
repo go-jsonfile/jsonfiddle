@@ -1,1 +1,1 @@
- easygen -tf ../../suntong/cli/cli-tx jsonfiddle | gofmt > jsonfiddleCLIDef.go
+ easygen -tf ../../suntong/cli/cli-tx jsonfiddle_cli | gofmt > jsonfiddle_cliDef.go
