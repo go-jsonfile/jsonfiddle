@@ -9,7 +9,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
 
 	"github.com/mkideal/cli"
 )
@@ -18,14 +17,15 @@ func fmtCLI(ctx *cli.Context) error {
 	rootArgv = ctx.RootArgv().(*rootT)
 	argv := ctx.Argv().(*fmtT)
 	// fmt.Printf("[fmt]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
-	Opts.Prefix, Opts.Indent, Opts.Compact, Opts.Verbose =
-		rootArgv.Prefix, rootArgv.Indent, rootArgv.Compact, rootArgv.Verbose.Value()
+	Opts.Prefix, Opts.Indent, Opts.Compact, Opts.Protect, Opts.Verbose =
+		rootArgv.Prefix, rootArgv.Indent, rootArgv.Compact,
+		rootArgv.Protect, rootArgv.Verbose.Value()
 
-	data, err := ioutil.ReadAll(argv.Filei)
+	data := readJson(argv.Filei)
 	argv.Filei.Close()
-	abortOn("[::fmt] Reading input", err)
 
 	var out bytes.Buffer
+	var err error
 	if Opts.Compact {
 		err = json.Compact(&out, data)
 	} else {

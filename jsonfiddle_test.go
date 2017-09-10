@@ -62,21 +62,23 @@ func TestExec(t *testing.T) {
 
 	// == Test Basic Functions
 	// -- fmt
+	t.Logf("\n\n== Testing Basic fmt Functions\n\n")
 	testIt(t, "CustomerC", "fmt", "-c", "-i", "Customer.json")
 	testIt(t, "Customer", "fmt", "-i", "Customer.json")
 	testIt(t, "Schedules", "fmt", "-i", "Schedules.json")
+	testIt(t, "CustomerP", "fmt", "-p", "-i", "CustomerP.json")
+	testIt(t, "CustomerPC", "fmt", "-c", "-p", "-i", "CustomerP.json")
 	// -- sort
+	t.Logf("\n\n== Testing Basic sort Functions\n\n")
 	testIt(t, "CustomerSI", "sort", "-i", "Customer.json")
 	testIt(t, "CustomerSC", "sort", "-c", "-i", "Customer.json")
+	testIt(t, "CustomerPS", "sort", "-p", "-i", "CustomerP.json")
 	testIt(t, "SchedulesSI", "sort", "-i", "Schedules.json")
 	// -- j2s
+	t.Logf("\n\n== Testing Basic j2s Functions\n\n")
 	testIt(t, "CustomerJ2S", "j2s", "-i", "Customer.json")
 	testIt(t, "GoodsJ2S", "j2s", "-i", "Goods.json")
 	testIt(t, "MenuItemsJ2S", "j2s", "-i", "MenuItems.json")
 	testIt(t, "SmartyStreetsJ2S", "j2s", "-i", "SmartyStreets.json")
 	testIt(t, "SchedulesJ2S", "j2s", "-i", "Schedules.json")
-
-	//Test String Functions
-
-	//Test Bigger files
 }

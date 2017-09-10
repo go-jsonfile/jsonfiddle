@@ -10,7 +10,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 
 	"github.com/mkideal/cli"
 )
@@ -22,17 +21,18 @@ func sortCLI(ctx *cli.Context) error {
 	rootArgv = ctx.RootArgv().(*rootT)
 	argv := ctx.Argv().(*sortT)
 	//fmt.Printf("[sort]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
-	Opts.Prefix, Opts.Indent, Opts.Compact, Opts.Verbose =
-		rootArgv.Prefix, rootArgv.Indent, rootArgv.Compact, rootArgv.Verbose.Value()
+	Opts.Prefix, Opts.Indent, Opts.Compact, Opts.Protect, Opts.Verbose =
+		rootArgv.Prefix, rootArgv.Indent, rootArgv.Compact,
+		rootArgv.Protect, rootArgv.Verbose.Value()
 	return cmdSort(argv.Filei, argv.Fileo)
 }
 
 func cmdSort(r io.Reader, w io.Writer) error {
 	var res interface{}
-	content, err := ioutil.ReadAll(r)
-	abortOn("[::sort] Reading input", err)
+	content := readJson(r)
 	json.Unmarshal(content, &res)
 	var js []byte
+	var err error
 	if Opts.Compact {
 		js, err = json.Marshal(res)
 	} else {

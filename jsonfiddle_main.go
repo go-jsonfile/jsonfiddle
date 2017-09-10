@@ -10,7 +10,10 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"io/ioutil"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/mkideal/cli"
@@ -24,6 +27,7 @@ type OptsT struct {
 	Prefix  string
 	Indent  string
 	Compact bool
+	Protect bool
 	Verbose int
 }
 
@@ -33,8 +37,8 @@ type OptsT struct {
 var (
 	progname = "jsonfiddle"
 	// version tracks the release version.
-	version = "v0.3.0"
-	date    = "2017-08-16"
+	version = "v0.4.0"
+	date    = "2017-09-09"
 )
 
 var (
@@ -75,6 +79,22 @@ func jsonfiddle(ctx *cli.Context) error {
 // support functions
 
 // Basename returns the file name without extension.
+func readJson(r io.Reader) []byte {
+	data, err := ioutil.ReadAll(r)
+	abortOn("Reading json input", err)
+
+	if Opts.Protect {
+		data = regexp.MustCompile(`({{)([^ }]+)(}})`).
+			ReplaceAll(data, []byte(`<<${2}>>`))
+		// "age":<<C_age>> => "age":"<<C_age>>"
+		data = regexp.MustCompile(`(:)(<<[^>]+>>)([]},])`).
+			ReplaceAll(data, []byte(`${1}"${2}"${3}`))
+	}
+	verbose(2, "%s", string(data))
+	return data
+}
+
+// Basename returns the file name without extension.
 func Basename(s string) string {
 	n := strings.LastIndexByte(s, '.')
 	if n > 0 {
@@ -92,8 +112,8 @@ func abortOn(errCase string, e error) {
 }
 
 // verbose will print info to stderr according to the verbose level setting
-func verbose(levelSet, levelNow int, format string, args ...interface{}) {
-	if levelNow >= levelSet {
+func verbose(levelSet int, format string, args ...interface{}) {
+	if Opts.Verbose >= levelSet {
 		fmt.Fprintf(os.Stderr, "["+progname+"] "+format+"\n", args...)
 	}
 }

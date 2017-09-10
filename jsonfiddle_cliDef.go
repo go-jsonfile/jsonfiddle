@@ -22,6 +22,7 @@ type rootT struct {
 	Compact bool        `cli:"c,compact" usage:"Compact JSON data, remove all whitespaces"`
 	Prefix  string      `cli:"prefix" usage:"prefix for json string output"`
 	Indent  string      `cli:"d,indent" usage:"indent for json string output" dft:" "`
+	Protect bool        `cli:"p,protect" usage:"protect {{TEMPLATE}} in JSON data"`
 	Verbose cli.Counter `cli:"v,verbose" usage:"Verbose mode (Multiple -v options increase the verbosity.)"`
 }
 
@@ -38,15 +39,30 @@ var root = &cli.Command{
 
 // Template for main starts here
 ////////////////////////////////////////////////////////////////////////////
+// Constant and data type/structure definitions
+
+// The OptsT type defines all the configurable options from cli.
+//  type OptsT struct {
+//  	Compact	bool
+//  	Prefix	string
+//  	Indent	string
+//  	Protect	bool
+//  	Verbose	cli.Counter
+//  	Verbose int
+//  }
+
+////////////////////////////////////////////////////////////////////////////
 // Global variables definitions
 
 //  var (
 //          progname  = "jsonfiddle"
 //          version   = "0.1.0"
-//          date = "2017-08-14"
-//  )
+//          date = "2017-09-09"
 
-//  var rootArgv *rootT
+//  	rootArgv *rootT
+//  	// Opts store all the configurable options
+//  	Opts OptsT
+//  )
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
@@ -87,6 +103,8 @@ var root = &cli.Command{
 //  	rootArgv = ctx.RootArgv().(*rootT)
 //  	argv := ctx.Argv().(*escT)
 //  	fmt.Printf("[esc]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
+//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
 //  	return nil
 //  }
 
@@ -112,6 +130,8 @@ var escDef = &cli.Command{
 //  	rootArgv = ctx.RootArgv().(*rootT)
 //  	argv := ctx.Argv().(*fmtT)
 //  	fmt.Printf("[fmt]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
+//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
 //  	return nil
 //  }
 
@@ -137,6 +157,8 @@ var fmtDef = &cli.Command{
 //  	rootArgv = ctx.RootArgv().(*rootT)
 //  	argv := ctx.Argv().(*sortT)
 //  	fmt.Printf("[sort]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
+//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
 //  	return nil
 //  }
 
@@ -162,6 +184,8 @@ var sortDef = &cli.Command{
 //  	rootArgv = ctx.RootArgv().(*rootT)
 //  	argv := ctx.Argv().(*j2sT)
 //  	fmt.Printf("[j2s]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
+//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
 //  	return nil
 //  }
 

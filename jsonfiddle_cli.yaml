@@ -31,6 +31,11 @@ Options:
     Usage: indent for json string output
     Value: ' '
 
+  - Name: Protect
+    Type: bool
+    Flag: p,protect
+    Usage: protect {{TEMPLATE}} in JSON data
+
   - Name: Verbose
     Type: cli.Counter
     Flag: v,verbose
