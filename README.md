@@ -21,6 +21,8 @@
   - [Format with `jsonfiddle fmt`](#format-with-`jsonfiddle-fmt`)
     - [Pretty print](#pretty-print)
       - [> test/CustomerSI.ref](#-testcustomersiref)
+    - [Protect templates in json data](#protect-templates-in-json-data)
+      - [> test/CustomerP.ref](#-testcustomerpref)
     - [Compact](#compact)
       - [> test/Customer.ref](#-testcustomerref)
     - [Sort fields with `jsonfiddle sort`](#sort-fields-with-`jsonfiddle-sort`)
@@ -52,7 +54,7 @@ The `jsonfiddle` makes it easy to look at the JSON data from different aspects.
 ### $ jsonfiddle
 ```sh
 JSON Fiddling
-Version v0.3.0 built on 2017-08-14
+Version v0.4.0 built on 2017-09-09
 
 Tool to fiddle with json strings
 
@@ -62,6 +64,7 @@ Options:
   -c, --compact      Compact JSON data, remove all whitespaces
       --prefix       prefix for json string output
   -d, --indent[= ]   indent for json string output
+  -p, --protect      protect {{TEMPLATE}} in JSON data
   -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
 
 Commands:
@@ -82,6 +85,7 @@ Options:
   -c, --compact      Compact JSON data, remove all whitespaces
       --prefix       prefix for json string output
   -d, --indent[= ]   indent for json string output
+  -p, --protect      protect {{TEMPLATE}} in JSON data
   -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
   -i, --input       *the source to get json string from (mandatory)
   -o, --output       the output (default: stdout)
@@ -97,6 +101,7 @@ Options:
   -c, --compact      Compact JSON data, remove all whitespaces
       --prefix       prefix for json string output
   -d, --indent[= ]   indent for json string output
+  -p, --protect      protect {{TEMPLATE}} in JSON data
   -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
   -i, --input       *the source to get json string from (mandatory)
   -o, --output       the output (default: stdout)
@@ -112,6 +117,7 @@ Options:
   -c, --compact      Compact JSON data, remove all whitespaces
       --prefix       prefix for json string output
   -d, --indent[= ]   indent for json string output
+  -p, --protect      protect {{TEMPLATE}} in JSON data
   -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
   -i, --input       *the source to get json string from (mandatory)
   -o, --output       the output (default: stdout)
@@ -127,6 +133,7 @@ Options:
   -c, --compact      Compact JSON data, remove all whitespaces
       --prefix       prefix for json string output
   -d, --indent[= ]   indent for json string output
+  -p, --protect      protect {{TEMPLATE}} in JSON data
   -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
   -f, --fmt[=json]   the structural format of the input data (json/yaml)
   -i, --input       *the source of the input JSON (mandatory)
@@ -189,6 +196,39 @@ This is why `jsonfiddle esc` is a command on its own, instead of being part of f
    "type": "fax"
   }
  ]
+}
+```
+
+### Protect templates in json data
+
+There are times that json data may contain templates, i.e., strings like `{{VARIABLE}}`. Some of the pretty printing tools, like the json plugin in Notepad++, cannot handle such template forms well, and will turn `{{VARIABLE}}` into:
+
+```json
+{
+  {
+    VARIABLE
+  }
+}
+```
+
+What's worse is that when such template variables are for `int`, e.g.: `"age":{{Var_Age}}`, they then wouldn't be able to handle it.
+
+To make such template variables work for those tools, the `-p,--protect` option is introduced:
+
+	$ jsonfiddle fmt -p -i test/CustomerP.json
+
+#### > test/CustomerP.ref
+```json
+{
+ "firstName": "<<C_firstName>>",
+ "lastName": "<<C_lastName>>",
+ "age": "<<C_age>>",
+ "address": {
+  "streetAddress": "<<C_address1>>",
+  "city": "<<C_city>>",
+  "state": "NY",
+  "postalCode": "10021"
+ }
 }
 ```
 

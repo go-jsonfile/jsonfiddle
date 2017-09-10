@@ -59,6 +59,26 @@ This is why `jsonfiddle esc` is a command on its own, instead of being part of f
 
 #### > {{cat "test/CustomerSI.ref" | color "json"}}
 
+### Protect templates in json data
+
+There are times that json data may contain templates, i.e., strings like `{{"{{VARIABLE}}"}}`. Some of the pretty printing tools, like the json plugin in Notepad++, cannot handle such template forms well, and will turn `{{"{{VARIABLE}}"}}` into:
+
+```json
+{
+  {
+    VARIABLE
+  }
+}
+```
+
+What's worse is that when such template variables are for `int`, e.g.: `"age":{{"{{Var_Age}}"}}`, they then wouldn't be able to handle it.
+
+To make such template variables work for those tools, the `-p,--protect` option is introduced:
+
+	$ jsonfiddle fmt -p -i test/CustomerP.json
+
+#### > {{cat "test/CustomerP.ref" | color "json"}}
+
 ### Compact
 
 	$ jsonfiddle fmt -c -i test/Customer.json
