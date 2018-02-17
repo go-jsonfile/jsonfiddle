@@ -5,6 +5,7 @@
 [![GoDoc](https://godoc.org/github.com/go-jsonfile/jsonfiddle?status.svg)](http://godoc.org/github.com/go-jsonfile/jsonfiddle)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-jsonfile/jsonfiddle)](https://goreportcard.com/report/github.com/go-jsonfile/jsonfiddle)
 [![travis Status](https://travis-ci.org/go-jsonfile/jsonfiddle.svg?branch=master)](https://travis-ci.org/go-jsonfile/jsonfiddle)
+[![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-R.svg)](http://godoc.org/github.com/go-easygen/wireframe)
 
 ## TOC
 - [jsonfiddle - JSON Fiddling](#jsonfiddle---json-fiddling)
@@ -378,5 +379,7 @@ All the following similar projects have been considered before writing one on my
 
 Tong SUN  
 ![suntong from cpan.org](https://img.shields.io/badge/suntong-%40cpan.org-lightgrey.svg "suntong from cpan.org")
+
+_Powered by_ [**WireFrame**](https://github.com/go-easygen/wireframe),  [![PoweredBy WireFrame](https://github.com/go-easygen/wireframe/blob/master/PoweredBy-WireFrame-Y.svg)](http://godoc.org/github.com/go-easygen/wireframe), the _one-stop wire-framing solution_ for Go cli based projects, from start to deploy.
 
 All patches welcome. 
