@@ -1,13 +1,17 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017, All rights reserved
+// Authors: Tong Sun (c) 2019, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
 
 import (
+	//  	"fmt"
+	//  	"os"
+
 	"github.com/mkideal/cli"
+	//  	"github.com/mkideal/cli/clis"
 	clix "github.com/mkideal/cli/ext"
 )
 
@@ -27,8 +31,9 @@ type rootT struct {
 }
 
 var root = &cli.Command{
-	Name:   "jsonfiddle",
-	Desc:   "JSON Fiddling\nVersion " + version + " built on " + date,
+	Name: "jsonfiddle",
+	Desc: "JSON Fiddling\nVersion " + version + " built on " + date +
+		"\nCopyright (C) 2019, Tong Sun",
 	Text:   "Tool to fiddle with json strings",
 	Global: true,
 	Argv:   func() interface{} { return new(rootT) },
@@ -57,7 +62,7 @@ var root = &cli.Command{
 //  var (
 //          progname  = "jsonfiddle"
 //          version   = "0.1.0"
-//          date = "2017-09-09"
+//          date = "2019-05-30"
 
 //  	rootArgv *rootT
 //  	// Opts store all the configurable options
@@ -69,22 +74,24 @@ var root = &cli.Command{
 
 // Function main
 //  func main() {
-//  	cli.SetUsageStyle(cli.ManualStyle) // up-down, for left-right, use NormalStyle
+//  	cli.SetUsageStyle(cli.DenseNormalStyle) // left-right, for up-down, use ManualStyle
 //  	//NOTE: You can set any writer implements io.Writer
 //  	// default writer is os.Stdout
 //  	if err := cli.Root(root,
 //  		cli.Tree(escDef),
 //  		cli.Tree(fmtDef),
 //  		cli.Tree(sortDef),
-//  		cli.Tree(j2sDef)).Run(os.Args[1:]); err != nil {
+//  		cli.Tree(j2sDef),
+//  		cli.Tree(x2jDef)).Run(os.Args[1:]); err != nil {
 //  		fmt.Fprintln(os.Stderr, err)
+//  		os.Exit(1)
 //  	}
 //  	fmt.Println("")
 //  }
 
 // Template for main dispatcher starts here
 //==========================================================================
-// Main dispatcher
+// Dumb root handler
 
 //  func jsonfiddle(ctx *cli.Context) error {
 //  	ctx.JSON(ctx.RootArgv())
@@ -102,9 +109,19 @@ var root = &cli.Command{
 //  func escCLI(ctx *cli.Context) error {
 //  	rootArgv = ctx.RootArgv().(*rootT)
 //  	argv := ctx.Argv().(*escT)
-//  	fmt.Printf("[esc]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	clis.Setup(progname, rootArgv.Verbose.Value())
+//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
 //  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
 //  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
+//  	// argv.Filei, argv.Fileo,
+//  	//return nil
+//  	return DoEsc()
+//  }
+//
+// DoEsc implements the business logic of command `esc`
+//  func DoEsc() error {
+//  	fmt.Fprintf(os.Stderr, "%s v%s. esc - Escape json string\n", progname, version)
+//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
 //  	return nil
 //  }
 
@@ -129,9 +146,19 @@ var escDef = &cli.Command{
 //  func fmtCLI(ctx *cli.Context) error {
 //  	rootArgv = ctx.RootArgv().(*rootT)
 //  	argv := ctx.Argv().(*fmtT)
-//  	fmt.Printf("[fmt]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	clis.Setup(progname, rootArgv.Verbose.Value())
+//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
 //  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
 //  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
+//  	// argv.Filei, argv.Fileo,
+//  	//return nil
+//  	return DoFmt()
+//  }
+//
+// DoFmt implements the business logic of command `fmt`
+//  func DoFmt() error {
+//  	fmt.Fprintf(os.Stderr, "%s v%s. fmt - Format json string\n", progname, version)
+//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
 //  	return nil
 //  }
 
@@ -156,9 +183,19 @@ var fmtDef = &cli.Command{
 //  func sortCLI(ctx *cli.Context) error {
 //  	rootArgv = ctx.RootArgv().(*rootT)
 //  	argv := ctx.Argv().(*sortT)
-//  	fmt.Printf("[sort]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	clis.Setup(progname, rootArgv.Verbose.Value())
+//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
 //  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
 //  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
+//  	// argv.Filei, argv.Fileo,
+//  	//return nil
+//  	return DoSort()
+//  }
+//
+// DoSort implements the business logic of command `sort`
+//  func DoSort() error {
+//  	fmt.Fprintf(os.Stderr, "%s v%s. sort - Sort json fields recursively\n", progname, version)
+//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
 //  	return nil
 //  }
 
@@ -183,9 +220,19 @@ var sortDef = &cli.Command{
 //  func j2sCLI(ctx *cli.Context) error {
 //  	rootArgv = ctx.RootArgv().(*rootT)
 //  	argv := ctx.Argv().(*j2sT)
-//  	fmt.Printf("[j2s]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
+//  	clis.Setup(progname, rootArgv.Verbose.Value())
+//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
 //  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
 //  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
+//  	// argv.FmtType, argv.Filei, argv.Fileo, argv.Name, argv.Pkg, argv.SubStruct,
+//  	//return nil
+//  	return DoJ2s()
+//  }
+//
+// DoJ2s implements the business logic of command `j2s`
+//  func DoJ2s() error {
+//  	fmt.Fprintf(os.Stderr, "%s v%s. j2s - JSON to struct\n", progname, version)
+//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
 //  	return nil
 //  }
 
@@ -204,6 +251,43 @@ var j2sDef = &cli.Command{
 
 	Argv: func() interface{} { return new(j2sT) },
 	Fn:   j2sCLI,
+
+	NumOption: cli.AtLeast(1),
+}
+
+////////////////////////////////////////////////////////////////////////////
+// x2j
+
+//  func x2jCLI(ctx *cli.Context) error {
+//  	rootArgv = ctx.RootArgv().(*rootT)
+//  	argv := ctx.Argv().(*x2jT)
+//  	clis.Setup(progname, rootArgv.Verbose.Value())
+//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
+//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
+//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
+//  	// argv.Filei, argv.Fileo,
+//  	//return nil
+//  	return DoX2j()
+//  }
+//
+// DoX2j implements the business logic of command `x2j`
+//  func DoX2j() error {
+//  	fmt.Fprintf(os.Stderr, "%s v%s. x2j - XML to JSON\n", progname, version)
+//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
+//  	return nil
+//  }
+
+type x2jT struct {
+	Filei *clix.Reader `cli:"*i,input" usage:"the source of the input JSON (mandatory)"`
+	Fileo *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
+}
+
+var x2jDef = &cli.Command{
+	Name: "x2j",
+	Desc: "XML to JSON",
+
+	Argv: func() interface{} { return new(x2jT) },
+	Fn:   x2jCLI,
 
 	NumOption: cli.AtLeast(1),
 }

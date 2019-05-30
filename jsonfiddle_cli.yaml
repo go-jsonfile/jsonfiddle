@@ -1,5 +1,6 @@
 # program name, name for the executable
 ProgramName: jsonfiddle
+Authors: Tong Sun
 
 PackageName: main
 
@@ -138,3 +139,20 @@ Command:
       #   Type: bool
       #   Flag: forcefloats
       #   Usage: [experimental] force float64 type for integral values
+
+  - Name: x2j
+    Desc: "XML to JSON"
+    NumOption: cli.AtLeast(1)
+
+    Options:
+
+      - Name: Filei
+        Type: '*clix.Reader'
+        Flag: '*i,input'
+        Usage: the source of the input JSON (mandatory)
+
+      - Name: Fileo
+        Type: '*clix.Writer'
+        Flag: o,output
+        Usage: 'the output (default: stdout)'
+

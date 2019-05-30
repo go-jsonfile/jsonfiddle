@@ -37,8 +37,8 @@ type OptsT struct {
 var (
 	progname = "jsonfiddle"
 	// version tracks the release version.
-	version = "v0.4.0"
-	date    = "2017-09-09"
+	version = "v0.5.0"
+	date    = "2019-05-30"
 )
 
 var (
@@ -58,8 +58,10 @@ func main() {
 		cli.Tree(escDef),
 		cli.Tree(fmtDef),
 		cli.Tree(sortDef),
-		cli.Tree(j2sDef)).Run(os.Args[1:]); err != nil {
+		cli.Tree(j2sDef),
+		cli.Tree(x2jDef)).Run(os.Args[1:]); err != nil {
 		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 	fmt.Println("")
 }
