@@ -37,7 +37,7 @@ type OptsT struct {
 var (
 	progname = "jsonfiddle"
 	// version tracks the release version.
-	version = "v0.5.0"
+	version = "0.5.0"
 	date    = "2019-05-30"
 )
 
