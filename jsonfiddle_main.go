@@ -13,6 +13,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 
@@ -52,6 +53,7 @@ var (
 
 // Function main
 func main() {
+	progname = filepath.Base(os.Args[0])
 	//NOTE: You can set any writer implements io.Writer
 	// default writer is os.Stdout
 	if err := cli.Root(root,
