@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017, All rights reserved
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
@@ -10,8 +10,8 @@ import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/go-easygen/go-flags/clis"
 	"github.com/go-jsonfile/gojson"
-	"github.com/mkideal/cli"
 	"github.com/suntong/enum"
 )
 
@@ -19,39 +19,37 @@ import (
 // Global variables definitions
 
 var (
-	fmtTypeEn enum.Enum
+	fmtTypeEn = enum.NewEnum()
 	fmtJson   = fmtTypeEn.Iota("json")
 	fmtYaml   = fmtTypeEn.Iota("yaml")
 
-	parser = []gojson.Parser{gojson.ParseJson, gojson.ParseYaml}
+	gjparser = []gojson.Parser{gojson.ParseJson, gojson.ParseYaml}
 )
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
 
-func j2sCLI(ctx *cli.Context) error {
-	rootArgv = ctx.RootArgv().(*rootT)
-	argv := ctx.Argv().(*j2sT)
-	// fmt.Printf("[j2s]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
-
-	fmtType, ok := fmtTypeEn.Get(argv.FmtType)
+// *** Sub-command: j2s ***
+// Exec implements the business logic of command `j2s`
+func (x *J2sCommand) Exec(args []string) error {
+	fmtType, ok := fmtTypeEn.Get(x.FmtType)
 	if !ok {
-		abortOn("[::j2s]", fmt.Errorf("Invalid format string: '%s'\n", argv.FmtType))
+		clis.AbortOn("Get FmtType", fmt.Errorf("Invalid format string: '%s'\n", x.FmtType))
 	}
-	nameRoot := Basename(filepath.Base(argv.Filei.Name()))
-	if len(argv.Name) != 0 {
-		nameRoot = argv.Name
+	nameRoot := clis.Basename(filepath.Base(x.Filei))
+	if len(x.Name) != 0 {
+		nameRoot = x.Name
 	}
 
-	output, err := gojson.Generate(argv.Filei, parser[fmtType],
-		nameRoot, argv.Pkg, []string{argv.FmtType}, argv.SubStruct)
-	abortOn("[::j2s] Parsing", err)
-	fmt.Fprint(argv.Fileo, string(output))
-	//abortOn("[::j2s] Writing output", err)
+	fileI := clis.GetInputStream(x.Filei)
+	defer fileI.Close()
+	output, err := gojson.Generate(fileI, gjparser[fmtType],
+		nameRoot, x.Pkg, []string{x.FmtType}, x.SubStruct)
+	clis.AbortOn("Gojson Parsing", err)
 
+	fileO := clis.GetOutputStream(x.Fileo)
+	defer fileO.Close()
+	fmt.Fprint(fileO, string(output))
+	// clis.WarnOn("J2s, Exec", err)
 	return nil
 }
-
-// func cmdJ2s() error {
-// 	return nil
-// }

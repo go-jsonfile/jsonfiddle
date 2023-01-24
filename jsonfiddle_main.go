@@ -1,123 +1,88 @@
-////////////////////////////////////////////////////////////////////////////
-// Program: jf
-// Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017, All rights reserved
-////////////////////////////////////////////////////////////////////////////
+// jsonfiddle - JSON Fiddling
+
+// Tool to fiddle with json strings
 
 package main
 
-//go:generate sh -v jsonfiddle_cliGen.sh
+////////////////////////////////////////////////////////////////////////////
+// Program: jsonfiddle
+// Purpose: JSON Fiddling
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
+////////////////////////////////////////////////////////////////////////////
+
+//go:generate sh jsonfiddle_cliGen.sh
+//go:generate emd gen -in README.beg.e.md -in README.e.md -in README.end.e.md -out README.md
 
 import (
 	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
-	"path/filepath"
 	"regexp"
-	"strings"
 
-	"github.com/mkideal/cli"
+	"github.com/go-easygen/go-flags"
+	"github.com/go-easygen/go-flags/clis"
 )
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 // Constant and data type/structure definitions
-
-// The OptsT type defines all the configurable options for jsonfiddle.
-type OptsT struct {
-	Prefix  string
-	Indent  string
-	Compact bool
-	Protect bool
-	Verbose int
-}
 
 ////////////////////////////////////////////////////////////////////////////
 // Global variables definitions
 
 var (
 	progname = "jsonfiddle"
-	// version tracks the release version.
-	version = "0.5.0"
-	date    = "2019-05-30"
+	version  = "0.5.0"
+	date     = "2023-01-22"
+
+	// opts store all the configurable options
+	opts optsT
 )
 
-var (
-	rootArgv *rootT
-	// Opts store all the configurable options for jsonfiddle.
-	Opts OptsT
-)
+var parser = flags.NewParser(&opts, flags.Default)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
 
 // Function main
 func main() {
-	progname = filepath.Base(os.Args[0])
-	//NOTE: You can set any writer implements io.Writer
-	// default writer is os.Stdout
-	if err := cli.Root(root,
-		cli.Tree(escDef),
-		cli.Tree(fmtDef),
-		cli.Tree(sortDef),
-		cli.Tree(j2sDef),
-		cli.Tree(x2jDef)).Run(os.Args[1:]); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	opts.Version = showVersion
+	opts.Verbflg = func() {
+		opts.Verbose++
+	}
+
+	if _, err := parser.Parse(); err != nil {
+		fmt.Println()
+		parser.WriteHelp(os.Stdout)
 		os.Exit(1)
 	}
-	fmt.Println("")
+	fmt.Println()
+	//DoJsonfiddle()
 }
 
-//==========================================================================
-// Main dispatcher
-
-func jsonfiddle(ctx *cli.Context) error {
-	ctx.JSON(ctx.RootArgv())
-	ctx.JSON(ctx.Argv())
-	fmt.Println()
-
-	return nil
+func showVersion() {
+	fmt.Fprintf(os.Stderr, "jsonfiddle - JSON Fiddling, version %s\n", version)
+	fmt.Fprintf(os.Stderr, "Built on %s\n", date)
+	fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+	fmt.Fprintf(os.Stderr, "Tool to fiddle with json strings\n")
+	os.Exit(0)
 }
 
 //==========================================================================
 // support functions
 
-// Basename returns the file name without extension.
+// readJson reads the given json file as []byte.
 func readJson(r io.Reader) []byte {
 	data, err := ioutil.ReadAll(r)
-	abortOn("Reading json input", err)
+	clis.AbortOn("Reading json input", err)
 
-	if Opts.Protect {
+	if opts.Protect {
 		data = regexp.MustCompile(`({{)([^ }]+)(}})`).
 			ReplaceAll(data, []byte(`<<${2}>>`))
 		// "age":<<C_age>> => "age":"<<C_age>>"
 		data = regexp.MustCompile(`(:)(<<[^>]+>>)([]},])`).
 			ReplaceAll(data, []byte(`${1}"${2}"${3}`))
 	}
-	verbose(2, "%s", string(data))
+	clis.Verbose(2, "%s", string(data))
 	return data
-}
-
-// Basename returns the file name without extension.
-func Basename(s string) string {
-	n := strings.LastIndexByte(s, '.')
-	if n > 0 {
-		return s[:n]
-	}
-	return s
-}
-
-// abortOn will quit on anticipated errors gracefully without stack trace
-func abortOn(errCase string, e error) {
-	if e != nil {
-		fmt.Fprintf(os.Stderr, "[%s] %s error: %v\n", progname, errCase, e)
-		os.Exit(1)
-	}
-}
-
-// verbose will print info to stderr according to the verbose level setting
-func verbose(levelSet int, format string, args ...interface{}) {
-	if Opts.Verbose >= levelSet {
-		fmt.Fprintf(os.Stderr, "["+progname+"] "+format+"\n", args...)
-	}
 }

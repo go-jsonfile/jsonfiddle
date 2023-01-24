@@ -22,4 +22,3 @@ type Schedules struct {
 	StartDate           string        `json:"StartDate"`
 	ZonesToSchedule     []int64       `json:"ZonesToSchedule"`
 }
-

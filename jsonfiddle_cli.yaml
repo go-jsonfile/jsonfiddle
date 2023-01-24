@@ -1,15 +1,15 @@
 # program name, name for the executable
 ProgramName: jsonfiddle
 Authors: Tong Sun
+Since: 2017
 
 PackageName: main
 
 Name: jsonfiddle
 Desc: "JSON Fiddling"
 Text: Tool to fiddle with json strings
-Global: true
-#NumOption: cli.AtLeast(1)
-NumArg: cli.AtLeast(1)
+Verbose: true
+Version: true
 
 #UsageLead: "Usage:\\n  jsonfiddle [Options] dir [dirs...]"
 
@@ -37,63 +37,66 @@ Options:
     Flag: p,protect
     Usage: protect {{TEMPLATE}} in JSON data
 
-  - Name: Verbose
-    Type: cli.Counter
-    Flag: v,verbose
-    Usage: Verbose mode (Multiple -v options increase the verbosity.)
-
 Command:
 
   - Name: esc
     Desc: "Escape json string"
-    NumOption: cli.AtLeast(1)
+    Text: ''
+    #Text: 'Usage:\n  jsonfiddle esc [Options]'
 
     Options:
       - Name: Filei
-        Type: '*clix.Reader'
-        Flag: '*i,input'
-        Usage: the source to get json string from (mandatory)
+        Type: string
+        Required: true
+        Flag: 'i,input'
+        Usage: 'the source to get json string from (or \"-\" for stdin) (mandatory)'
 
       - Name: Fileo
-        Type: '*clix.Writer'
+        Type: string
         Flag: o,output
-        Usage: 'the output (default: stdout)'
+        Value: "-"
+        Usage: 'the output, default to stdout'
 
   - Name: fmt
     Desc: "Format json string"
-    #NumArg: cli.AtLeast(1)
-    NumOption: cli.AtLeast(1)
+    Text: ''
+    #Text: 'Usage:\n  jsonfiddle fmt [Options]'
 
     Options:
       - Name: Filei
-        Type: '*clix.Reader'
-        Flag: '*i,input'
+        Type: string
+        Required: true
+        Flag: 'i,input'
         Usage: the source to get json string from (mandatory)
 
       - Name: Fileo
-        Type: '*clix.Writer'
+        Type: string
         Flag: o,output
-        Usage: 'the output (default: stdout)'
+        Value: "-"
+        Usage: 'the output, default to stdout'
 
   - Name: sort
     Desc: "Sort json fields recursively"
-    #NumArg: cli.AtLeast(1)
-    NumOption: cli.AtLeast(1)
+    Text: ''
+    #Text: 'Usage:\n  jsonfiddle sort [Options]'
 
     Options:
       - Name: Filei
-        Type: '*clix.Reader'
-        Flag: '*i,input'
+        Type: string
+        Required: true
+        Flag: 'i,input'
         Usage: the source to get json string from (mandatory)
 
       - Name: Fileo
-        Type: '*clix.Writer'
+        Type: string
         Flag: o,output
-        Usage: 'the output (default: stdout)'
+        Value: "-"
+        Usage: 'the output, default to stdout'
 
   - Name: j2s
     Desc: "JSON to struct"
-    NumOption: cli.AtLeast(1)
+    Text: 'JSON convert to Go struct'
+    #Text: 'Usage:\n  jsonfiddle j2s [Options]'
 
     Options:
 
@@ -104,14 +107,16 @@ Command:
         Value: json
 
       - Name: Filei
-        Type: '*clix.Reader'
-        Flag: '*i,input'
+        Type: string
+        Required: true
+        Flag: 'i,input'
         Usage: the source of the input JSON (mandatory)
 
       - Name: Fileo
-        Type: '*clix.Writer'
+        Type: string
         Flag: o,output
-        Usage: 'the output (default: stdout)'
+        Value: "-"
+        Usage: 'the output, default to stdout'
 
       - Name: Name
         Type: string
@@ -142,17 +147,19 @@ Command:
 
   - Name: x2j
     Desc: "XML to JSON"
-    NumOption: cli.AtLeast(1)
+    Text: ''
 
     Options:
 
       - Name: Filei
-        Type: '*clix.Reader'
-        Flag: '*i,input'
+        Type: string
+        Required: true
+        Flag: 'i,input'
         Usage: the source of the input JSON (mandatory)
 
       - Name: Fileo
-        Type: '*clix.Writer'
+        Type: string
         Flag: o,output
-        Usage: 'the output (default: stdout)'
+        Value: "-"
+        Usage: 'the output, default to stdout'
 

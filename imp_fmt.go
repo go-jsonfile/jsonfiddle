@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017, All rights reserved
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
@@ -9,30 +9,29 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 
-	"github.com/mkideal/cli"
+	"github.com/go-easygen/go-flags/clis"
 )
 
-func fmtCLI(ctx *cli.Context) error {
-	rootArgv = ctx.RootArgv().(*rootT)
-	argv := ctx.Argv().(*fmtT)
-	// fmt.Printf("[fmt]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
-	Opts.Prefix, Opts.Indent, Opts.Compact, Opts.Protect, Opts.Verbose =
-		rootArgv.Prefix, rootArgv.Indent, rootArgv.Compact,
-		rootArgv.Protect, rootArgv.Verbose.Value()
-
-	data := readJson(argv.Filei)
-	argv.Filei.Close()
+// *** Sub-command: fmt ***
+// Exec implements the business logic of command `fmt`
+func (x *FmtCommand) Exec(args []string) error {
+	fileI := clis.GetInputStream(x.Filei)
+	defer fileI.Close()
+	data := readJson(fileI)
 
 	var out bytes.Buffer
 	var err error
-	if Opts.Compact {
+	if opts.Compact {
 		err = json.Compact(&out, data)
 	} else {
-		err = json.Indent(&out, data, Opts.Prefix, Opts.Indent)
+		err = json.Indent(&out, data, opts.Prefix, opts.Indent)
 	}
-	abortOn("[::fmt] Formatting input", err)
-	out.WriteTo(argv.Fileo)
-
+	clis.AbortOn("Formatting input", err)
+	fileO := clis.GetOutputStream(x.Fileo)
+	defer fileO.Close()
+	out.WriteTo(fileO)
+	fmt.Fprintln(fileO)
 	return nil
 }

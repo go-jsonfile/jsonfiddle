@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
-// Program: jf
+// Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017, All rights reserved
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
@@ -11,21 +11,22 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/mkideal/cli"
+	"github.com/go-easygen/go-flags/clis"
 )
 
-////////////////////////////////////////////////////////////////////////////
-// sort
+// *** Sub-command: sort ***
+// Exec implements the business logic of command `sort`
+func (x *SortCommand) Exec(args []string) error {
+	fileI := clis.GetInputStream(x.Filei)
+	defer fileI.Close()
+	fileO := clis.GetOutputStream(x.Fileo)
+	defer fileO.Close()
 
-func sortCLI(ctx *cli.Context) error {
-	rootArgv = ctx.RootArgv().(*rootT)
-	argv := ctx.Argv().(*sortT)
-	//fmt.Printf("[sort]:\n  %+v\n  %+v\n  %v\n", rootArgv, argv, ctx.Args())
-	Opts.Prefix, Opts.Indent, Opts.Compact, Opts.Protect, Opts.Verbose =
-		rootArgv.Prefix, rootArgv.Indent, rootArgv.Compact,
-		rootArgv.Protect, rootArgv.Verbose.Value()
-	return cmdSort(argv.Filei, argv.Fileo)
+	return cmdSort(fileI, fileO)
 }
+
+//==========================================================================
+// support functions
 
 func cmdSort(r io.Reader, w io.Writer) error {
 	var res interface{}
@@ -33,12 +34,12 @@ func cmdSort(r io.Reader, w io.Writer) error {
 	json.Unmarshal(content, &res)
 	var js []byte
 	var err error
-	if Opts.Compact {
+	if opts.Compact {
 		js, err = json.Marshal(res)
 	} else {
-		js, err = json.MarshalIndent(res, Opts.Prefix, Opts.Indent)
+		js, err = json.MarshalIndent(res, opts.Prefix, opts.Indent)
 	}
-	abortOn("[::sort] Marshaling input", err)
+	clis.AbortOn("[::sort] Marshaling input", err)
 	fmt.Fprintln(w, string(js))
 	return nil
 }

@@ -43,4 +43,3 @@ type SmartyStreets []struct {
 		ZipType               string  `json:"zip_type"`
 	} `json:"metadata"`
 }
-

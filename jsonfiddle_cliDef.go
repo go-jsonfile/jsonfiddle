@@ -1,60 +1,26 @@
-////////////////////////////////////////////////////////////////////////////
-// Program: jsonfiddle
-// Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2019, All rights reserved
-////////////////////////////////////////////////////////////////////////////
+// jsonfiddle - JSON Fiddling
+//
+// Tool to fiddle with json strings
 
 package main
 
-import (
-	//  	"fmt"
-	//  	"os"
+////////////////////////////////////////////////////////////////////////////
+// Program: jsonfiddle
+// Purpose: JSON Fiddling
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
+////////////////////////////////////////////////////////////////////////////
 
-	"github.com/mkideal/cli"
-	//  	"github.com/mkideal/cli/clis"
-	clix "github.com/mkideal/cli/ext"
+import (
+//  	"fmt"
+//  	"os"
+
+// "github.com/go-easygen/go-flags"
 )
 
-////////////////////////////////////////////////////////////////////////////
-// Constant and data type/structure definitions
-
-//==========================================================================
-// jsonfiddle
-
-type rootT struct {
-	cli.Helper
-	Compact bool        `cli:"c,compact" usage:"Compact JSON data, remove all whitespaces"`
-	Prefix  string      `cli:"prefix" usage:"prefix for json string output"`
-	Indent  string      `cli:"d,indent" usage:"indent for json string output" dft:" "`
-	Protect bool        `cli:"p,protect" usage:"protect {{TEMPLATE}} in JSON data"`
-	Verbose cli.Counter `cli:"v,verbose" usage:"Verbose mode (Multiple -v options increase the verbosity.)"`
-}
-
-var root = &cli.Command{
-	Name: "jsonfiddle",
-	Desc: "JSON Fiddling\nVersion " + version + " built on " + date +
-		"\nCopyright (C) 2019, Tong Sun",
-	Text:   "Tool to fiddle with json strings",
-	Global: true,
-	Argv:   func() interface{} { return new(rootT) },
-	Fn:     jsonfiddle,
-
-	NumArg: cli.AtLeast(1),
-}
-
 // Template for main starts here
-////////////////////////////////////////////////////////////////////////////
-// Constant and data type/structure definitions
 
-// The OptsT type defines all the configurable options from cli.
-//  type OptsT struct {
-//  	Compact	bool
-//  	Prefix	string
-//  	Indent	string
-//  	Protect	bool
-//  	Verbose	cli.Counter
-//  	Verbose int
-//  }
+//////////////////////////////////////////////////////////////////////////
+// Constant and data type/structure definitions
 
 ////////////////////////////////////////////////////////////////////////////
 // Global variables definitions
@@ -62,232 +28,342 @@ var root = &cli.Command{
 //  var (
 //          progname  = "jsonfiddle"
 //          version   = "0.1.0"
-//          date = "2019-05-30"
+//          date = "2023-01-23"
 
-//  	rootArgv *rootT
-//  	// Opts store all the configurable options
-//  	Opts OptsT
+//  	// opts store all the configurable options
+//  	opts optsT
 //  )
+//
+//  var parser = flags.NewParser(&opts, flags.Default)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
 
 // Function main
 //  func main() {
-//  	cli.SetUsageStyle(cli.DenseNormalStyle) // left-right, for up-down, use ManualStyle
-//  	//NOTE: You can set any writer implements io.Writer
-//  	// default writer is os.Stdout
-//  	if err := cli.Root(root,
-//  		cli.Tree(escDef),
-//  		cli.Tree(fmtDef),
-//  		cli.Tree(sortDef),
-//  		cli.Tree(j2sDef),
-//  		cli.Tree(x2jDef)).Run(os.Args[1:]); err != nil {
-//  		fmt.Fprintln(os.Stderr, err)
+//  	opts.Version = showVersion
+//  	opts.Verbflg = func() {
+//  		opts.Verbose++
+//  	}
+//
+//  	if _, err := parser.Parse(); err != nil {
+//  		fmt.Println()
+//  		parser.WriteHelp(os.Stdout)
 //  		os.Exit(1)
 //  	}
-//  	fmt.Println("")
-//  }
-
-// Template for main dispatcher starts here
-//==========================================================================
-// Dumb root handler
-
-//  func jsonfiddle(ctx *cli.Context) error {
-//  	ctx.JSON(ctx.RootArgv())
-//  	ctx.JSON(ctx.Argv())
 //  	fmt.Println()
-
-//  	return nil
-//  }
-
-// Template for CLI handling starts here
-
-////////////////////////////////////////////////////////////////////////////
-// esc
-
-//  func escCLI(ctx *cli.Context) error {
-//  	rootArgv = ctx.RootArgv().(*rootT)
-//  	argv := ctx.Argv().(*escT)
-//  	clis.Setup(progname, rootArgv.Verbose.Value())
-//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
-//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
-//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
-//  	// argv.Filei, argv.Fileo,
-//  	//return nil
-//  	return DoEsc()
+//  	//DoJsonfiddle()
 //  }
 //
-// DoEsc implements the business logic of command `esc`
-//  func DoEsc() error {
-//  	fmt.Fprintf(os.Stderr, "%s v%s. esc - Escape json string\n", progname, version)
-//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
+//  func showVersion() {
+//   	fmt.Fprintf(os.Stderr, "jsonfiddle - JSON Fiddling, version %s\n", version)
+//  	fmt.Fprintf(os.Stderr, "Built on %s\n", date)
+//   	fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//  	fmt.Fprintf(os.Stderr, "Tool to fiddle with json strings\n")
+//  	os.Exit(0)
+//  }
+// Template for main ends here
+
+// DoJsonfiddle implements the business logic of command `jsonfiddle`
+//  func DoJsonfiddle() error {
 //  	return nil
 //  }
 
-type escT struct {
-	Filei *clix.Reader `cli:"*i,input" usage:"the source to get json string from (mandatory)"`
-	Fileo *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
+// Template for type define starts here
+
+// The optsT type defines all the configurable options from cli.
+type optsT struct {
+	Compact bool   `short:"c" long:"compact" description:"Compact JSON data, remove all whitespaces"`
+	Prefix  string `long:"prefix" description:"prefix for json string output"`
+	Indent  string `short:"d" long:"indent" description:"indent for json string output" default:" "`
+	Protect bool   `short:"p" long:"protect" description:"protect {{TEMPLATE}} in JSON data"`
+	Verbflg func() `short:"v" long:"verbose" description:"Verbose mode (Multiple -v options increase the verbosity)"`
+	Verbose int
+	Version func() `short:"V" long:"version" description:"Show program version and exit"`
 }
 
-var escDef = &cli.Command{
-	Name: "esc",
-	Desc: "Escape json string",
+// Template for type define ends here
 
-	Argv: func() interface{} { return new(escT) },
-	Fn:   escCLI,
+// Template for "esc" CLI handling starts here
+////////////////////////////////////////////////////////////////////////////
+// Program: jsonfiddle
+// Purpose: JSON Fiddling
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
+////////////////////////////////////////////////////////////////////////////
 
-	NumOption: cli.AtLeast(1),
-}
+//  package main
+
+//  import (
+//  	"fmt"
+//  	"os"
+//
+//  	"github.com/go-easygen/go-flags/clis"
+//  )
+
+// *** Sub-command: esc ***
 
 ////////////////////////////////////////////////////////////////////////////
-// fmt
+// Constant and data type/structure definitions
 
-//  func fmtCLI(ctx *cli.Context) error {
-//  	rootArgv = ctx.RootArgv().(*rootT)
-//  	argv := ctx.Argv().(*fmtT)
-//  	clis.Setup(progname, rootArgv.Verbose.Value())
-//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
-//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
-//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
-//  	// argv.Filei, argv.Fileo,
-//  	//return nil
-//  	return DoFmt()
+// The EscCommand type defines all the configurable options from cli.
+//  type EscCommand struct {
+//  	Filei	string	`short:"i" long:"input" description:"the source to get json string from (or \"-\" for stdin) (mandatory)" required:"true"`
+//  	Fileo	string	`short:"o" long:"output" description:"the output, default to stdout" default:"-"`
+//  }
+
+//
+//  var escCommand EscCommand
+//
+//  func init() {
+//  	parser.AddCommand("esc",
+//  		"Escape json string",
+//  		"",
+//  		&escCommand)
 //  }
 //
-// DoFmt implements the business logic of command `fmt`
-//  func DoFmt() error {
-//  	fmt.Fprintf(os.Stderr, "%s v%s. fmt - Format json string\n", progname, version)
-//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
-//  	return nil
+//  func (x *EscCommand) Execute(args []string) error {
+//   	fmt.Fprintf(os.Stderr, "Escape json string\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	clis.Setup("jsonfiddle::esc", opts.Verbose)
+//   	clis.Verbose(1, "Doing Esc, with %+v, %+v", opts, args)
+//   	fmt.Println(x.Filei, x.Fileo)
+//  	return x.Exec(args)
 //  }
+//
+// Exec implements the business logic of command `esc`
+// func (x *EscCommand) Exec(args []string) error {
+// 	// err := ...
+// 	// clis.WarnOn("Esc, Exec", err)
+// 	// or,
+// 	// clis.AbortOn("Esc, Exec", err)
+// 	return nil
+// }
+// Template for "esc" CLI handling ends here
 
-type fmtT struct {
-	Filei *clix.Reader `cli:"*i,input" usage:"the source to get json string from (mandatory)"`
-	Fileo *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
-}
+// Template for "fmt" CLI handling starts here
+////////////////////////////////////////////////////////////////////////////
+// Program: jsonfiddle
+// Purpose: JSON Fiddling
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
+////////////////////////////////////////////////////////////////////////////
 
-var fmtDef = &cli.Command{
-	Name: "fmt",
-	Desc: "Format json string",
+//  package main
 
-	Argv: func() interface{} { return new(fmtT) },
-	Fn:   fmtCLI,
+//  import (
+//  	"fmt"
+//  	"os"
+//
+//  	"github.com/go-easygen/go-flags/clis"
+//  )
 
-	NumOption: cli.AtLeast(1),
-}
+// *** Sub-command: fmt ***
 
 ////////////////////////////////////////////////////////////////////////////
-// sort
+// Constant and data type/structure definitions
 
-//  func sortCLI(ctx *cli.Context) error {
-//  	rootArgv = ctx.RootArgv().(*rootT)
-//  	argv := ctx.Argv().(*sortT)
-//  	clis.Setup(progname, rootArgv.Verbose.Value())
-//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
-//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
-//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
-//  	// argv.Filei, argv.Fileo,
-//  	//return nil
-//  	return DoSort()
+// The FmtCommand type defines all the configurable options from cli.
+//  type FmtCommand struct {
+//  	Filei	string	`short:"i" long:"input" description:"the source to get json string from (mandatory)" required:"true"`
+//  	Fileo	string	`short:"o" long:"output" description:"the output, default to stdout" default:"-"`
+//  }
+
+//
+//  var fmtCommand FmtCommand
+//
+//  func init() {
+//  	parser.AddCommand("fmt",
+//  		"Format json string",
+//  		"",
+//  		&fmtCommand)
 //  }
 //
-// DoSort implements the business logic of command `sort`
-//  func DoSort() error {
-//  	fmt.Fprintf(os.Stderr, "%s v%s. sort - Sort json fields recursively\n", progname, version)
-//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
-//  	return nil
+//  func (x *FmtCommand) Execute(args []string) error {
+//   	fmt.Fprintf(os.Stderr, "Format json string\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	clis.Setup("jsonfiddle::fmt", opts.Verbose)
+//   	clis.Verbose(1, "Doing Fmt, with %+v, %+v", opts, args)
+//   	fmt.Println(x.Filei, x.Fileo)
+//  	return x.Exec(args)
 //  }
+//
+// Exec implements the business logic of command `fmt`
+// func (x *FmtCommand) Exec(args []string) error {
+// 	// err := ...
+// 	// clis.WarnOn("Fmt, Exec", err)
+// 	// or,
+// 	// clis.AbortOn("Fmt, Exec", err)
+// 	return nil
+// }
+// Template for "fmt" CLI handling ends here
 
-type sortT struct {
-	Filei *clix.Reader `cli:"*i,input" usage:"the source to get json string from (mandatory)"`
-	Fileo *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
-}
+// Template for "sort" CLI handling starts here
+////////////////////////////////////////////////////////////////////////////
+// Program: jsonfiddle
+// Purpose: JSON Fiddling
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
+////////////////////////////////////////////////////////////////////////////
 
-var sortDef = &cli.Command{
-	Name: "sort",
-	Desc: "Sort json fields recursively",
+//  package main
 
-	Argv: func() interface{} { return new(sortT) },
-	Fn:   sortCLI,
+//  import (
+//  	"fmt"
+//  	"os"
+//
+//  	"github.com/go-easygen/go-flags/clis"
+//  )
 
-	NumOption: cli.AtLeast(1),
-}
+// *** Sub-command: sort ***
 
 ////////////////////////////////////////////////////////////////////////////
-// j2s
+// Constant and data type/structure definitions
 
-//  func j2sCLI(ctx *cli.Context) error {
-//  	rootArgv = ctx.RootArgv().(*rootT)
-//  	argv := ctx.Argv().(*j2sT)
-//  	clis.Setup(progname, rootArgv.Verbose.Value())
-//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
-//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
-//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
-//  	// argv.FmtType, argv.Filei, argv.Fileo, argv.Name, argv.Pkg, argv.SubStruct,
-//  	//return nil
-//  	return DoJ2s()
+// The SortCommand type defines all the configurable options from cli.
+//  type SortCommand struct {
+//  	Filei	string	`short:"i" long:"input" description:"the source to get json string from (mandatory)" required:"true"`
+//  	Fileo	string	`short:"o" long:"output" description:"the output, default to stdout" default:"-"`
+//  }
+
+//
+//  var sortCommand SortCommand
+//
+//  func init() {
+//  	parser.AddCommand("sort",
+//  		"Sort json fields recursively",
+//  		"",
+//  		&sortCommand)
 //  }
 //
-// DoJ2s implements the business logic of command `j2s`
-//  func DoJ2s() error {
-//  	fmt.Fprintf(os.Stderr, "%s v%s. j2s - JSON to struct\n", progname, version)
-//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
-//  	return nil
+//  func (x *SortCommand) Execute(args []string) error {
+//   	fmt.Fprintf(os.Stderr, "Sort json fields recursively\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	clis.Setup("jsonfiddle::sort", opts.Verbose)
+//   	clis.Verbose(1, "Doing Sort, with %+v, %+v", opts, args)
+//   	fmt.Println(x.Filei, x.Fileo)
+//  	return x.Exec(args)
 //  }
+//
+// Exec implements the business logic of command `sort`
+// func (x *SortCommand) Exec(args []string) error {
+// 	// err := ...
+// 	// clis.WarnOn("Sort, Exec", err)
+// 	// or,
+// 	// clis.AbortOn("Sort, Exec", err)
+// 	return nil
+// }
+// Template for "sort" CLI handling ends here
 
-type j2sT struct {
-	FmtType   string       `cli:"f,fmt" usage:"the structural format of the input data (json/yaml)" dft:"json"`
-	Filei     *clix.Reader `cli:"*i,input" usage:"the source of the input JSON (mandatory)"`
-	Fileo     *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
-	Name      string       `cli:"name" usage:"the name of the root struct (default: as input file name)"`
-	Pkg       string       `cli:"pkg" usage:"the name of the package for the generated code" dft:"main"`
-	SubStruct bool         `cli:"subStruct" usage:"create types for sub-structs"`
-}
+// Template for "j2s" CLI handling starts here
+////////////////////////////////////////////////////////////////////////////
+// Program: jsonfiddle
+// Purpose: JSON Fiddling
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
+////////////////////////////////////////////////////////////////////////////
 
-var j2sDef = &cli.Command{
-	Name: "j2s",
-	Desc: "JSON to struct",
+//  package main
 
-	Argv: func() interface{} { return new(j2sT) },
-	Fn:   j2sCLI,
+//  import (
+//  	"fmt"
+//  	"os"
+//
+//  	"github.com/go-easygen/go-flags/clis"
+//  )
 
-	NumOption: cli.AtLeast(1),
-}
+// *** Sub-command: j2s ***
 
 ////////////////////////////////////////////////////////////////////////////
-// x2j
+// Constant and data type/structure definitions
 
-//  func x2jCLI(ctx *cli.Context) error {
-//  	rootArgv = ctx.RootArgv().(*rootT)
-//  	argv := ctx.Argv().(*x2jT)
-//  	clis.Setup(progname, rootArgv.Verbose.Value())
-//  	clis.Verbose(2, "<%s> -\n  %+v\n  %+v\n  %v\n", ctx.Path(), rootArgv, argv, ctx.Args())
-//  	Opts.Compact, Opts.Prefix, Opts.Indent, Opts.Protect, Opts.Verbose, Opts.Verbose =
-//  		rootArgv.Compact, rootArgv.Prefix, rootArgv.Indent, rootArgv.Protect, rootArgv.Verbose, rootArgv.Verbose.Value()
-//  	// argv.Filei, argv.Fileo,
-//  	//return nil
-//  	return DoX2j()
+// The J2sCommand type defines all the configurable options from cli.
+//  type J2sCommand struct {
+//  	FmtType	string	`short:"f" long:"fmt" description:"the structural format of the input data (json/yaml)" default:"json"`
+//  	Filei	string	`short:"i" long:"input" description:"the source of the input JSON (mandatory)" required:"true"`
+//  	Fileo	string	`short:"o" long:"output" description:"the output, default to stdout" default:"-"`
+//  	Name	string	`long:"name" description:"the name of the root struct (default: as input file name)"`
+//  	Pkg	string	`long:"pkg" description:"the name of the package for the generated code" default:"main"`
+//  	SubStruct	bool	`long:"subStruct" description:"create types for sub-structs"`
+//  }
+
+//
+//  var j2sCommand J2sCommand
+//
+//  func init() {
+//  	parser.AddCommand("j2s",
+//  		"JSON to struct",
+//  		"JSON convert to Go struct",
+//  		&j2sCommand)
 //  }
 //
-// DoX2j implements the business logic of command `x2j`
-//  func DoX2j() error {
-//  	fmt.Fprintf(os.Stderr, "%s v%s. x2j - XML to JSON\n", progname, version)
-//  	// fmt.Fprintf(os.Stderr, "Copyright (C) 2019, Tong Sun\n\n")
-//  	return nil
+//  func (x *J2sCommand) Execute(args []string) error {
+//   	fmt.Fprintf(os.Stderr, "JSON to struct\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	clis.Setup("jsonfiddle::j2s", opts.Verbose)
+//   	clis.Verbose(1, "Doing J2s, with %+v, %+v", opts, args)
+//   	fmt.Println(x.FmtType, x.Filei, x.Fileo, x.Name, x.Pkg, x.SubStruct)
+//  	return x.Exec(args)
+//  }
+//
+// Exec implements the business logic of command `j2s`
+// func (x *J2sCommand) Exec(args []string) error {
+// 	// err := ...
+// 	// clis.WarnOn("J2s, Exec", err)
+// 	// or,
+// 	// clis.AbortOn("J2s, Exec", err)
+// 	return nil
+// }
+// Template for "j2s" CLI handling ends here
+
+// Template for "x2j" CLI handling starts here
+////////////////////////////////////////////////////////////////////////////
+// Program: jsonfiddle
+// Purpose: JSON Fiddling
+// Authors: Tong Sun (c) 2017-2023, All rights reserved
+////////////////////////////////////////////////////////////////////////////
+
+//  package main
+
+//  import (
+//  	"fmt"
+//  	"os"
+//
+//  	"github.com/go-easygen/go-flags/clis"
+//  )
+
+// *** Sub-command: x2j ***
+
+////////////////////////////////////////////////////////////////////////////
+// Constant and data type/structure definitions
+
+// The X2jCommand type defines all the configurable options from cli.
+//  type X2jCommand struct {
+//  	Filei	string	`short:"i" long:"input" description:"the source of the input JSON (mandatory)" required:"true"`
+//  	Fileo	string	`short:"o" long:"output" description:"the output, default to stdout" default:"-"`
 //  }
 
-type x2jT struct {
-	Filei *clix.Reader `cli:"*i,input" usage:"the source of the input JSON (mandatory)"`
-	Fileo *clix.Writer `cli:"o,output" usage:"the output (default: stdout)"`
-}
-
-var x2jDef = &cli.Command{
-	Name: "x2j",
-	Desc: "XML to JSON",
-
-	Argv: func() interface{} { return new(x2jT) },
-	Fn:   x2jCLI,
-
-	NumOption: cli.AtLeast(1),
-}
+//
+//  var x2jCommand X2jCommand
+//
+//  func init() {
+//  	parser.AddCommand("x2j",
+//  		"XML to JSON",
+//  		"",
+//  		&x2jCommand)
+//  }
+//
+//  func (x *X2jCommand) Execute(args []string) error {
+//   	fmt.Fprintf(os.Stderr, "XML to JSON\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	clis.Setup("jsonfiddle::x2j", opts.Verbose)
+//   	clis.Verbose(1, "Doing X2j, with %+v, %+v", opts, args)
+//   	fmt.Println(x.Filei, x.Fileo)
+//  	return x.Exec(args)
+//  }
+//
+// Exec implements the business logic of command `x2j`
+// func (x *X2jCommand) Exec(args []string) error {
+// 	// err := ...
+// 	// clis.WarnOn("X2j, Exec", err)
+// 	// or,
+// 	// clis.AbortOn("X2j, Exec", err)
+// 	return nil
+// }
+// Template for "x2j" CLI handling ends here
