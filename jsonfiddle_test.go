@@ -81,4 +81,7 @@ func TestExec(t *testing.T) {
 	testIt(t, "MenuItemsJ2S", "j2s", "-i", "MenuItems.json")
 	testIt(t, "SmartyStreetsJ2S", "j2s", "-i", "SmartyStreets.json")
 	testIt(t, "SchedulesJ2S", "j2s", "-i", "Schedules.json")
+	// -- x2j
+	//t.Logf("\n\n== Testing Basic x2j Functions\n\n")
+	//testIt(t, "Books", "x2j", "-i", "Books.xml")
 }
