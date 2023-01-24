@@ -39,11 +39,12 @@ var (
 	opts optsT
 )
 
-var parser = flags.NewParser(&opts, flags.Default)
+var gfParser = flags.NewParser(&opts, flags.Default)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
 
+//==========================================================================
 // Function main
 func main() {
 	opts.Version = showVersion
@@ -51,14 +52,17 @@ func main() {
 		opts.Verbose++
 	}
 
-	if _, err := parser.Parse(); err != nil {
+	if _, err := gfParser.Parse(); err != nil {
 		fmt.Println()
-		parser.WriteHelp(os.Stdout)
+		gfParser.WriteHelp(os.Stdout)
 		os.Exit(1)
 	}
 	fmt.Println()
 	//DoJsonfiddle()
 }
+
+//==========================================================================
+// support functions
 
 func showVersion() {
 	fmt.Fprintf(os.Stderr, "jsonfiddle - JSON Fiddling, version %s\n", version)
@@ -67,9 +71,6 @@ func showVersion() {
 	fmt.Fprintf(os.Stderr, "Tool to fiddle with json strings\n")
 	os.Exit(0)
 }
-
-//==========================================================================
-// support functions
 
 // readJson reads the given json file as []byte.
 func readJson(r io.Reader) []byte {

@@ -26,8 +26,11 @@ type EscCommand struct {
 
 var escCommand EscCommand
 
+////////////////////////////////////////////////////////////////////////////
+// Function definitions
+
 func init() {
-	parser.AddCommand("esc",
+	gfParser.AddCommand("esc",
 		"Escape json string",
 		"",
 		&escCommand)
@@ -38,15 +41,15 @@ func (x *EscCommand) Execute(args []string) error {
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 	clis.Setup("jsonfiddle::esc", opts.Verbose)
 	clis.Verbose(1, "Doing Esc, with %+v, %+v", opts, args)
-// 	fmt.Println(x.Filei, x.Fileo)
+	// fmt.Println(x.Filei, x.Fileo)
 	return x.Exec(args)
 }
 
-// Exec implements the business logic of command `esc`
+// // Exec implements the business logic of command `esc`
 // func (x *EscCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("Esc, Exec", err)
+// 	// clis.WarnOn("esc::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("Esc, Exec", err)
+// 	// clis.AbortOn("esc::Exec", err)
 // 	return nil
 // }

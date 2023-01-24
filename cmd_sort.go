@@ -26,8 +26,11 @@ type SortCommand struct {
 
 var sortCommand SortCommand
 
+////////////////////////////////////////////////////////////////////////////
+// Function definitions
+
 func init() {
-	parser.AddCommand("sort",
+	gfParser.AddCommand("sort",
 		"Sort json fields recursively",
 		"",
 		&sortCommand)
@@ -38,15 +41,15 @@ func (x *SortCommand) Execute(args []string) error {
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 	clis.Setup("jsonfiddle::sort", opts.Verbose)
 	clis.Verbose(1, "Doing Sort, with %+v, %+v", opts, args)
-// 	fmt.Println(x.Filei, x.Fileo)
+	// fmt.Println(x.Filei, x.Fileo)
 	return x.Exec(args)
 }
 
-// Exec implements the business logic of command `sort`
+// // Exec implements the business logic of command `sort`
 // func (x *SortCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("Sort, Exec", err)
+// 	// clis.WarnOn("sort::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("Sort, Exec", err)
+// 	// clis.AbortOn("sort::Exec", err)
 // 	return nil
 // }

@@ -26,8 +26,11 @@ type FmtCommand struct {
 
 var fmtCommand FmtCommand
 
+////////////////////////////////////////////////////////////////////////////
+// Function definitions
+
 func init() {
-	parser.AddCommand("fmt",
+	gfParser.AddCommand("fmt",
 		"Format json string",
 		"",
 		&fmtCommand)
@@ -38,15 +41,15 @@ func (x *FmtCommand) Execute(args []string) error {
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 	clis.Setup("jsonfiddle::fmt", opts.Verbose)
 	clis.Verbose(1, "Doing Fmt, with %+v, %+v", opts, args)
-// 	fmt.Println(x.Filei, x.Fileo)
+	// fmt.Println(x.Filei, x.Fileo)
 	return x.Exec(args)
 }
 
-// Exec implements the business logic of command `fmt`
+// // Exec implements the business logic of command `fmt`
 // func (x *FmtCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("Fmt, Exec", err)
+// 	// clis.WarnOn("fmt::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("Fmt, Exec", err)
+// 	// clis.AbortOn("fmt::Exec", err)
 // 	return nil
 // }

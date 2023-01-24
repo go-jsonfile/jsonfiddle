@@ -34,11 +34,12 @@ import (
 //  	opts optsT
 //  )
 //
-//  var parser = flags.NewParser(&opts, flags.Default)
+//  var gfParser = flags.NewParser(&opts, flags.Default)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
 
+//==========================================================================
 // Function main
 //  func main() {
 //  	opts.Version = showVersion
@@ -46,14 +47,17 @@ import (
 //  		opts.Verbose++
 //  	}
 //
-//  	if _, err := parser.Parse(); err != nil {
+//  	if _, err := gfParser.Parse(); err != nil {
 //  		fmt.Println()
-//  		parser.WriteHelp(os.Stdout)
+//  		gfParser.WriteHelp(os.Stdout)
 //  		os.Exit(1)
 //  	}
 //  	fmt.Println()
 //  	//DoJsonfiddle()
 //  }
+//
+//  //==========================================================================
+//  // support functions
 //
 //  func showVersion() {
 //   	fmt.Fprintf(os.Stderr, "jsonfiddle - JSON Fiddling, version %s\n", version)
@@ -114,8 +118,11 @@ type optsT struct {
 //
 //  var escCommand EscCommand
 //
+//  ////////////////////////////////////////////////////////////////////////////
+//  // Function definitions
+//
 //  func init() {
-//  	parser.AddCommand("esc",
+//  	gfParser.AddCommand("esc",
 //  		"Escape json string",
 //  		"",
 //  		&escCommand)
@@ -126,16 +133,16 @@ type optsT struct {
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::esc", opts.Verbose)
 //   	clis.Verbose(1, "Doing Esc, with %+v, %+v", opts, args)
-//   	fmt.Println(x.Filei, x.Fileo)
+//   	// fmt.Println(x.Filei, x.Fileo)
 //  	return x.Exec(args)
 //  }
 //
-// Exec implements the business logic of command `esc`
+// // Exec implements the business logic of command `esc`
 // func (x *EscCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("Esc, Exec", err)
+// 	// clis.WarnOn("esc::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("Esc, Exec", err)
+// 	// clis.AbortOn("esc::Exec", err)
 // 	return nil
 // }
 // Template for "esc" CLI handling ends here
@@ -170,8 +177,11 @@ type optsT struct {
 //
 //  var fmtCommand FmtCommand
 //
+//  ////////////////////////////////////////////////////////////////////////////
+//  // Function definitions
+//
 //  func init() {
-//  	parser.AddCommand("fmt",
+//  	gfParser.AddCommand("fmt",
 //  		"Format json string",
 //  		"",
 //  		&fmtCommand)
@@ -182,16 +192,16 @@ type optsT struct {
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::fmt", opts.Verbose)
 //   	clis.Verbose(1, "Doing Fmt, with %+v, %+v", opts, args)
-//   	fmt.Println(x.Filei, x.Fileo)
+//   	// fmt.Println(x.Filei, x.Fileo)
 //  	return x.Exec(args)
 //  }
 //
-// Exec implements the business logic of command `fmt`
+// // Exec implements the business logic of command `fmt`
 // func (x *FmtCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("Fmt, Exec", err)
+// 	// clis.WarnOn("fmt::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("Fmt, Exec", err)
+// 	// clis.AbortOn("fmt::Exec", err)
 // 	return nil
 // }
 // Template for "fmt" CLI handling ends here
@@ -226,8 +236,11 @@ type optsT struct {
 //
 //  var sortCommand SortCommand
 //
+//  ////////////////////////////////////////////////////////////////////////////
+//  // Function definitions
+//
 //  func init() {
-//  	parser.AddCommand("sort",
+//  	gfParser.AddCommand("sort",
 //  		"Sort json fields recursively",
 //  		"",
 //  		&sortCommand)
@@ -238,16 +251,16 @@ type optsT struct {
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::sort", opts.Verbose)
 //   	clis.Verbose(1, "Doing Sort, with %+v, %+v", opts, args)
-//   	fmt.Println(x.Filei, x.Fileo)
+//   	// fmt.Println(x.Filei, x.Fileo)
 //  	return x.Exec(args)
 //  }
 //
-// Exec implements the business logic of command `sort`
+// // Exec implements the business logic of command `sort`
 // func (x *SortCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("Sort, Exec", err)
+// 	// clis.WarnOn("sort::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("Sort, Exec", err)
+// 	// clis.AbortOn("sort::Exec", err)
 // 	return nil
 // }
 // Template for "sort" CLI handling ends here
@@ -286,8 +299,11 @@ type optsT struct {
 //
 //  var j2sCommand J2sCommand
 //
+//  ////////////////////////////////////////////////////////////////////////////
+//  // Function definitions
+//
 //  func init() {
-//  	parser.AddCommand("j2s",
+//  	gfParser.AddCommand("j2s",
 //  		"JSON to struct",
 //  		"JSON convert to Go struct",
 //  		&j2sCommand)
@@ -298,16 +314,16 @@ type optsT struct {
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::j2s", opts.Verbose)
 //   	clis.Verbose(1, "Doing J2s, with %+v, %+v", opts, args)
-//   	fmt.Println(x.FmtType, x.Filei, x.Fileo, x.Name, x.Pkg, x.SubStruct)
+//   	// fmt.Println(x.FmtType, x.Filei, x.Fileo, x.Name, x.Pkg, x.SubStruct)
 //  	return x.Exec(args)
 //  }
 //
-// Exec implements the business logic of command `j2s`
+// // Exec implements the business logic of command `j2s`
 // func (x *J2sCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("J2s, Exec", err)
+// 	// clis.WarnOn("j2s::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("J2s, Exec", err)
+// 	// clis.AbortOn("j2s::Exec", err)
 // 	return nil
 // }
 // Template for "j2s" CLI handling ends here
@@ -342,8 +358,11 @@ type optsT struct {
 //
 //  var x2jCommand X2jCommand
 //
+//  ////////////////////////////////////////////////////////////////////////////
+//  // Function definitions
+//
 //  func init() {
-//  	parser.AddCommand("x2j",
+//  	gfParser.AddCommand("x2j",
 //  		"XML to JSON",
 //  		"",
 //  		&x2jCommand)
@@ -354,16 +373,16 @@ type optsT struct {
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::x2j", opts.Verbose)
 //   	clis.Verbose(1, "Doing X2j, with %+v, %+v", opts, args)
-//   	fmt.Println(x.Filei, x.Fileo)
+//   	// fmt.Println(x.Filei, x.Fileo)
 //  	return x.Exec(args)
 //  }
 //
-// Exec implements the business logic of command `x2j`
+// // Exec implements the business logic of command `x2j`
 // func (x *X2jCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("X2j, Exec", err)
+// 	// clis.WarnOn("x2j::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("X2j, Exec", err)
+// 	// clis.AbortOn("x2j::Exec", err)
 // 	return nil
 // }
 // Template for "x2j" CLI handling ends here

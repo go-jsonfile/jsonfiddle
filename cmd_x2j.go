@@ -26,8 +26,11 @@ type X2jCommand struct {
 
 var x2jCommand X2jCommand
 
+////////////////////////////////////////////////////////////////////////////
+// Function definitions
+
 func init() {
-	parser.AddCommand("x2j",
+	gfParser.AddCommand("x2j",
 		"XML to JSON",
 		"",
 		&x2jCommand)
@@ -38,15 +41,15 @@ func (x *X2jCommand) Execute(args []string) error {
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 	clis.Setup("jsonfiddle::x2j", opts.Verbose)
 	clis.Verbose(1, "Doing X2j, with %+v, %+v", opts, args)
-// 	fmt.Println(x.Filei, x.Fileo)
+	// fmt.Println(x.Filei, x.Fileo)
 	return x.Exec(args)
 }
 
-// Exec implements the business logic of command `x2j`
+// // Exec implements the business logic of command `x2j`
 // func (x *X2jCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("X2j, Exec", err)
+// 	// clis.WarnOn("x2j::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("X2j, Exec", err)
+// 	// clis.AbortOn("x2j::Exec", err)
 // 	return nil
 // }

@@ -30,8 +30,11 @@ type J2sCommand struct {
 
 var j2sCommand J2sCommand
 
+////////////////////////////////////////////////////////////////////////////
+// Function definitions
+
 func init() {
-	parser.AddCommand("j2s",
+	gfParser.AddCommand("j2s",
 		"JSON to struct",
 		"JSON convert to Go struct",
 		&j2sCommand)
@@ -42,15 +45,15 @@ func (x *J2sCommand) Execute(args []string) error {
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
 	clis.Setup("jsonfiddle::j2s", opts.Verbose)
 	clis.Verbose(1, "Doing J2s, with %+v, %+v", opts, args)
-// 	fmt.Println(x.FmtType, x.Filei, x.Fileo, x.Name, x.Pkg, x.SubStruct)
+	// fmt.Println(x.FmtType, x.Filei, x.Fileo, x.Name, x.Pkg, x.SubStruct)
 	return x.Exec(args)
 }
 
-// Exec implements the business logic of command `j2s`
+// // Exec implements the business logic of command `j2s`
 // func (x *J2sCommand) Exec(args []string) error {
 // 	// err := ...
-// 	// clis.WarnOn("J2s, Exec", err)
+// 	// clis.WarnOn("j2s::Exec", err)
 // 	// or,
-// 	// clis.AbortOn("J2s, Exec", err)
+// 	// clis.AbortOn("j2s::Exec", err)
 // 	return nil
 // }
