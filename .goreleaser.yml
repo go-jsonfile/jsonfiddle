@@ -1,43 +1,34 @@
+project_name: jsonfiddle
+
+archives:
+  - format: tar.gz
+    wrap_in_directory: true
+    format_overrides:
+      - goos: windows
+        format: zip
+    # remove README and LICENSE
+    files:
+      - none*
+
 builds:
-  -
-    env:
-#      - CGO_ENABLED=0
+  - env: [CGO_ENABLED=0]
     goos:
       - linux
-      - darwin
       - windows
+      - darwin
     goarch:
-      - 386
       - amd64
-    # List of combinations of GOOS + GOARCH + GOARM to ignore.
-    # Default is empty.
-    ignore:
-      - goos: darwin
-        goarch: 386
-      - goos: windows
-        goarch: 386
+      - arm64
 
-archive:
-  name_template: '{{ .Binary }}_{{ .Os }}_{{ .Version }}_{{ .Arch }}'
-  replacements:
-    # darwin: Darwin
-    windows: Windows
-    # linux: Linux
-    # amd64: x86_64
-    386: i386
-  format_overrides:
-    - goos: windows
-      format: zip
+    # Path to main.go file or main package.
+    # Default is `.`.
 
-fpm:
-  homepage:  https://github.com/go-jsonfile/jsonfiddle
-  description: JSON Fiddling, to look at the JSON data from different aspects.
-  maintainer: Tong Sun <suntong@cpan.org>
+nfpms:
+- maintainer: Tong Sun <suntong@cpan.org>
+  description: jsonfiddle - Tool to fiddle with json strings
+  homepage: https://github.com/go-jsonfiddle/jsonfiddle
   license: MIT
-  vendor: suntong
   formats:
-    - deb
-#   - rpm
-  dependencies:
-    - git
-
+  - deb
+  - rpm
+  - apk
