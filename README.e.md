@@ -16,25 +16,32 @@ The `jsonfiddle` makes it easy to look at the JSON data from different aspects.
 - **`jsonfiddle esc`** will escape any arbitrary string so as to embed it as content of json string.
 - **`jsonfiddle fmt`** will format the JSON data, either compact it or pretty printing it. The order of fields are intact. 
 - **`jsonfiddle sort`** will sort the JSON data fields recursively, so that the attributes at any level are in sorted order.
+- **`jsonfiddle x2j`** means xml to json. It will convert data from xml format into json.
 - **`jsonfiddle j2s`** means json to struct. It will extract the structure of JSON data as Go struct.
 
 # Usage
 
-### $ {{exec "jsonfiddle" | color "sh"}}
+```
+$ {{shell "jsonfiddle -V"}}
+```
 
-### $ {{shell "jsonfiddle esc" | color "sh"}}
+### $ {{shell "jsonfiddle || true" | color "sh"}}
 
-### $ {{shell "jsonfiddle fmt" | color "sh"}}
+### $ {{shell "jsonfiddle esc || true" | color "sh"}}
 
-### $ {{shell "jsonfiddle sort" | color "sh"}}
+### $ {{shell "jsonfiddle fmt || true" | color "sh"}}
 
-### $ {{shell "jsonfiddle j2s" | color "sh"}}
+### $ {{shell "jsonfiddle sort || true" | color "sh"}}
+
+### $ {{shell "jsonfiddle j2s || true" | color "sh"}}
+
+### $ {{shell "jsonfiddle x2j || true" | color "sh"}}
 
 # Examples
 
 ## Escape with `jsonfiddle esc`
 
-### $ {{shell "jsonfiddle esc -i test/Customer.ref" | color "json"}}
+### $ {{shell "jsonfiddle esc -i test/Customer.ref 2>/dev/null" | color "json"}}
 
 ### Usage
 
@@ -72,7 +79,8 @@ There are times that json data may contain templates, i.e., strings like `{{"{{V
 }
 ```
 
-What's worse is that when such template variables are for `int`, e.g.: `"age":{{"{{Var_Age}}"}}`, they then wouldn't be able to handle it.
+What's worse is that when such template variables are for `int`, e.g.: `"age":{{"{{Var_Age}}"}}`, they then wouldn't be able to handle it, for inputs like
+{{cat "test/CustomerP.json" | color "sh"}}
 
 To make such template variables work for those tools, the `-p,--protect` option is introduced:
 
@@ -84,15 +92,21 @@ To make such template variables work for those tools, the `-p,--protect` option 
 
 	$ jsonfiddle fmt -c -i test/Customer.json
 
-#### > {{cat "test/Customer.ref" | color "json"}}
+#### > {{cat "test/CustomerC.ref" | color "json"}}
 
 You can also do,
 
-	$ cat Customer.json | jsonfiddle fmt -c -i
+	$ cat Customer.json | jsonfiddle fmt -c -i -
 
 and the result is the same (and for all other examples using `-i` as well). 
 
 ## Sort fields with `jsonfiddle sort`
+
+### Sort in compact
+
+	$ jsonfiddle sort -c -i test/Customer.json
+
+#### > {{cat "test/CustomerSC.ref" | color "json"}}
 
 ### Sort with pretty print
 
@@ -100,11 +114,11 @@ and the result is the same (and for all other examples using `-i` as well).
 
 #### > {{cat "test/CustomerSI.ref" | color "json"}}
 
-### Sort in compact
+### XML to JSON, sort then pretty print
 
-	$ jsonfiddle sort -c -i test/Customer.json
-
-#### > {{cat "test/CustomerSC.ref" | color "json"}}
+```
+$ {{shell "jsonfiddle x2j -i test/Books.xml | jsonfiddle sort -i - | jsonfiddle fmt -i -"}}
+```
 
 ## JSON to struct via `jsonfiddle j2s`
 
@@ -127,7 +141,7 @@ Thus all the JSON comparison tools I found are failing under such hash request. 
 - The latest binary executables are available under  
 https://github.com/go-jsonfile/{{.Name}}/releases  
 as the result of the Continuous-Integration process.
-- I.e., they are built right from the source code during every git tagging commit automatically by [travis-ci](https://travis-ci.org/).
+- I.e., they are built right from the source code during every git tagging commit automatically.
 - Pick & choose the binary executable that suits your OS and its architecture. E.g., for Linux, it would most probably be the `{{.Name}}_linux_VER_amd64` file. If your OS and its architecture is not available in the download list, please let me know and I'll add it.
 - You may want to rename it to a shorter name instead, e.g., `{{.Name}}`, after downloading it. 
 
@@ -153,6 +167,8 @@ go get github.com/go-jsonfile/jsonfiddle
 ## Similar Projects
 
 All the following similar projects have been considered before writing one on my own instead.
+
+. . . to be filled . . .
 
 ## Author(s) & Contributor(s)
 

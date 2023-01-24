@@ -11,7 +11,7 @@ package main
 ////////////////////////////////////////////////////////////////////////////
 
 //go:generate sh jsonfiddle_cliGen.sh
-//go:generate emd gen -in README.beg.e.md -in README.e.md -in README.end.e.md -out README.md
+//go:generate emd gen -in README.e.md -out README.md
 
 import (
 	"fmt"

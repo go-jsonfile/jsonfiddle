@@ -10,36 +10,10 @@
 ## TOC
 - [jsonfiddle - JSON Fiddling](#jsonfiddle---json-fiddling)
 - [Usage](#usage)
-  - [$ jsonfiddle](#-jsonfiddle)
-  - [$ jsonfiddle esc](#-jsonfiddle-esc)
-  - [$ jsonfiddle fmt](#-jsonfiddle-fmt)
-  - [$ jsonfiddle sort](#-jsonfiddle-sort)
-  - [$ jsonfiddle j2s](#-jsonfiddle-j2s)
-- [Examples](#examples)
-  - [Escape with `jsonfiddle esc`](#escape-with-`jsonfiddle-esc`)
-    - [$ jsonfiddle esc -i test/Customer.ref](#-jsonfiddle-esc--i-testcustomerref)
-    - [Usage](#usage-1)
-  - [Format with `jsonfiddle fmt`](#format-with-`jsonfiddle-fmt`)
-    - [Pretty print](#pretty-print)
-      - [> test/CustomerSI.ref](#-testcustomersiref)
-    - [Protect templates in json data](#protect-templates-in-json-data)
-      - [> test/CustomerP.ref](#-testcustomerpref)
-    - [Compact](#compact)
-      - [> test/Customer.ref](#-testcustomerref)
-    - [Sort fields with `jsonfiddle sort`](#sort-fields-with-`jsonfiddle-sort`)
-      - [Sort with pretty print](#sort-with-pretty-print)
-        - [> test/CustomerSI.ref](#-testcustomersiref-1)
-      - [Sort in compact](#sort-in-compact)
-        - [> test/CustomerSC.ref](#-testcustomerscref)
-      - [JSON to struct via `jsonfiddle j2s`](#json-to-struct-via-`jsonfiddle-j2s`)
-        - [> test/CustomerJ2S.ref](#-testcustomerj2sref)
-- [Purpose](#purpose)
-- [Download binaries](#download-binaries)
-- [Debian package](#debian-package)
-- [Install Source](#install-source)
-  - [Credits](#credits)
-  - [Similar Projects](#similar-projects)
-  - [Author(s) & Contributor(s)](#author(s)-&-contributor(s))
+  - [$ jsonfiddle || true](#-jsonfiddle--true)
+  - [$ jsonfiddle esc || true](#-jsonfiddle-esc--true)
+  - [$ jsonfiddle sort || true](#-jsonfiddle-sort--true)
+  - [$ jsonfiddle x2j || true](#-jsonfiddle-x2j--true)
 
 ## jsonfiddle - JSON Fiddling
 
@@ -48,107 +22,175 @@ The `jsonfiddle` makes it easy to look at the JSON data from different aspects.
 - **`jsonfiddle esc`** will escape any arbitrary string so as to embed it as content of json string.
 - **`jsonfiddle fmt`** will format the JSON data, either compact it or pretty printing it. The order of fields are intact. 
 - **`jsonfiddle sort`** will sort the JSON data fields recursively, so that the attributes at any level are in sorted order.
+- **`jsonfiddle x2j`** means xml to json. It will convert data from xml format into json.
 - **`jsonfiddle j2s`** means json to struct. It will extract the structure of JSON data as Go struct.
 
 # Usage
 
-### $ jsonfiddle
-```sh
-JSON Fiddling
-Version v0.4.0 built on 2017-09-09
+```
+$ jsonfiddle -V
+jsonfiddle - JSON Fiddling, version 0.5.0
+Built on 2023-01-22
+Copyright (C) 2017-2023, Tong Sun
 
 Tool to fiddle with json strings
-
-Options:
-
-  -h, --help         display help information
-  -c, --compact      Compact JSON data, remove all whitespaces
-      --prefix       prefix for json string output
-  -d, --indent[= ]   indent for json string output
-  -p, --protect      protect {{TEMPLATE}} in JSON data
-  -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
-
-Commands:
-
-  esc    Escape json string
-  fmt    Format json string
-  sort   Sort json fields recursively
-  j2s    JSON to struct
 ```
 
-### $ jsonfiddle esc
+### $ jsonfiddle || true
 ```sh
-Escape json string
+Please specify one command of: esc, fmt, j2s, sort or x2j
 
-Options:
+Usage:
+  jsonfiddle [OPTIONS] <command>
 
-  -h, --help         display help information
-  -c, --compact      Compact JSON data, remove all whitespaces
-      --prefix       prefix for json string output
-  -d, --indent[= ]   indent for json string output
-  -p, --protect      protect {{TEMPLATE}} in JSON data
-  -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
-  -i, --input       *the source to get json string from (mandatory)
-  -o, --output       the output (default: stdout)
+Application Options:
+  -c, --compact  Compact JSON data, remove all whitespaces
+      --prefix=  prefix for json string output
+  -d, --indent=  indent for json string output (default:  )
+  -p, --protect  protect {{TEMPLATE}} in JSON data
+  -v, --verbose  Verbose mode (Multiple -v options increase the verbosity)
+  -V, --version  Show program version and exit
+
+Help Options:
+  -h, --help     Show this help message
+
+Available commands:
+  esc   Escape json string
+  fmt   Format json string
+  j2s   JSON to struct
+  sort  Sort json fields recursively
+  x2j   XML to JSON
 ```
 
-### $ jsonfiddle fmt
+### $ jsonfiddle esc || true
 ```sh
-Format json string
+the required flag `-i, --input' was not specified
 
-Options:
+Usage:
+  jsonfiddle [OPTIONS] esc [esc-OPTIONS]
 
-  -h, --help         display help information
-  -c, --compact      Compact JSON data, remove all whitespaces
-      --prefix       prefix for json string output
-  -d, --indent[= ]   indent for json string output
-  -p, --protect      protect {{TEMPLATE}} in JSON data
-  -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
-  -i, --input       *the source to get json string from (mandatory)
-  -o, --output       the output (default: stdout)
+Application Options:
+  -c, --compact     Compact JSON data, remove all whitespaces
+      --prefix=     prefix for json string output
+  -d, --indent=     indent for json string output (default:  )
+  -p, --protect     protect {{TEMPLATE}} in JSON data
+  -v, --verbose     Verbose mode (Multiple -v options increase the verbosity)
+  -V, --version     Show program version and exit
+
+Help Options:
+  -h, --help        Show this help message
+
+[esc command options]
+      -i, --input=  the source to get json string from (or "-" for stdin)
+                    (mandatory)
+      -o, --output= the output, default to stdout (default: -)
 ```
 
-### $ jsonfiddle sort
+### $ jsonfiddle fmt || true
 ```sh
-Sort json fields recursively
+the required flag `-i, --input' was not specified
 
-Options:
+Usage:
+  jsonfiddle [OPTIONS] fmt [fmt-OPTIONS]
 
-  -h, --help         display help information
-  -c, --compact      Compact JSON data, remove all whitespaces
-      --prefix       prefix for json string output
-  -d, --indent[= ]   indent for json string output
-  -p, --protect      protect {{TEMPLATE}} in JSON data
-  -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
-  -i, --input       *the source to get json string from (mandatory)
-  -o, --output       the output (default: stdout)
+Application Options:
+  -c, --compact     Compact JSON data, remove all whitespaces
+      --prefix=     prefix for json string output
+  -d, --indent=     indent for json string output (default:  )
+  -p, --protect     protect {{TEMPLATE}} in JSON data
+  -v, --verbose     Verbose mode (Multiple -v options increase the verbosity)
+  -V, --version     Show program version and exit
+
+Help Options:
+  -h, --help        Show this help message
+
+[fmt command options]
+      -i, --input=  the source to get json string from (mandatory)
+      -o, --output= the output, default to stdout (default: -)
 ```
 
-### $ jsonfiddle j2s
+### $ jsonfiddle sort || true
 ```sh
-JSON to struct
+the required flag `-i, --input' was not specified
 
-Options:
+Usage:
+  jsonfiddle [OPTIONS] sort [sort-OPTIONS]
 
-  -h, --help         display help information
-  -c, --compact      Compact JSON data, remove all whitespaces
-      --prefix       prefix for json string output
-  -d, --indent[= ]   indent for json string output
-  -p, --protect      protect {{TEMPLATE}} in JSON data
-  -v, --verbose      Verbose mode (Multiple -v options increase the verbosity.)
-  -f, --fmt[=json]   the structural format of the input data (json/yaml)
-  -i, --input       *the source of the input JSON (mandatory)
-  -o, --output       the output (default: stdout)
-      --name         the name of the root struct (default: as input file name)
-      --pkg[=main]   the name of the package for the generated code
-      --subStruct    create types for sub-structs
+Application Options:
+  -c, --compact     Compact JSON data, remove all whitespaces
+      --prefix=     prefix for json string output
+  -d, --indent=     indent for json string output (default:  )
+  -p, --protect     protect {{TEMPLATE}} in JSON data
+  -v, --verbose     Verbose mode (Multiple -v options increase the verbosity)
+  -V, --version     Show program version and exit
+
+Help Options:
+  -h, --help        Show this help message
+
+[sort command options]
+      -i, --input=  the source to get json string from (mandatory)
+      -o, --output= the output, default to stdout (default: -)
+```
+
+### $ jsonfiddle j2s || true
+```sh
+the required flag `-i, --input' was not specified
+
+Usage:
+  jsonfiddle [OPTIONS] j2s [j2s-OPTIONS]
+
+JSON convert to Go struct
+
+Application Options:
+  -c, --compact        Compact JSON data, remove all whitespaces
+      --prefix=        prefix for json string output
+  -d, --indent=        indent for json string output (default:  )
+  -p, --protect        protect {{TEMPLATE}} in JSON data
+  -v, --verbose        Verbose mode (Multiple -v options increase the verbosity)
+  -V, --version        Show program version and exit
+
+Help Options:
+  -h, --help           Show this help message
+
+[j2s command options]
+      -f, --fmt=       the structural format of the input data (json/yaml)
+                       (default: json)
+      -i, --input=     the source of the input JSON (mandatory)
+      -o, --output=    the output, default to stdout (default: -)
+          --name=      the name of the root struct (default: as input file name)
+          --pkg=       the name of the package for the generated code (default:
+                       main)
+          --subStruct  create types for sub-structs
+```
+
+### $ jsonfiddle x2j || true
+```sh
+the required flag `-i, --input' was not specified
+
+Usage:
+  jsonfiddle [OPTIONS] x2j [x2j-OPTIONS]
+
+Application Options:
+  -c, --compact     Compact JSON data, remove all whitespaces
+      --prefix=     prefix for json string output
+  -d, --indent=     indent for json string output (default:  )
+  -p, --protect     protect {{TEMPLATE}} in JSON data
+  -v, --verbose     Verbose mode (Multiple -v options increase the verbosity)
+  -V, --version     Show program version and exit
+
+Help Options:
+  -h, --help        Show this help message
+
+[x2j command options]
+      -i, --input=  the source of the input JSON (mandatory)
+      -o, --output= the output, default to stdout (default: -)
 ```
 
 # Examples
 
 ## Escape with `jsonfiddle esc`
 
-### $ jsonfiddle esc -i test/Customer.ref
+### $ jsonfiddle esc -i test/Customer.ref 2>/dev/null
 ```json
 "{\n \"firstName\": \"John\",\n \"lastName\": \"Smith\",\n \"age\": 25,\n \"address\": {\n  \"streetAddress\": \"21 2nd Street\",\n  \"city\": \"New York\",\n  \"state\": \"NY\",\n  \"postalCode\": \"10021\"\n },\n \"phoneNumber\": [\n  {\n   \"type\": \"home\",\n   \"number\": \"212 555-1234\"\n  },\n  {\n   \"type\": \"fax\",\n   \"number\": \"646 555-4567\"\n  }\n ]\n}\n\n"
 ```
@@ -212,7 +254,11 @@ There are times that json data may contain templates, i.e., strings like `{{VARI
 }
 ```
 
-What's worse is that when such template variables are for `int`, e.g.: `"age":{{Var_Age}}`, they then wouldn't be able to handle it.
+What's worse is that when such template variables are for `int`, e.g.: `"age":{{Var_Age}}`, they then wouldn't be able to handle it, for inputs like
+test/CustomerP.json
+```sh
+{"firstName":"{{C_firstName}}","lastName":"{{C_lastName}}","age":{{C_age}},"address":{"streetAddress":"{{C_address1}}","city":"{{C_city}}","state":"NY","postalCode":"10021"}}
+```
 
 To make such template variables work for those tools, the `-p,--protect` option is introduced:
 
@@ -237,38 +283,27 @@ To make such template variables work for those tools, the `-p,--protect` option 
 
 	$ jsonfiddle fmt -c -i test/Customer.json
 
-#### > test/Customer.ref
+#### > test/CustomerC.ref
 ```json
-{
- "firstName": "John",
- "lastName": "Smith",
- "age": 25,
- "address": {
-  "streetAddress": "21 2nd Street",
-  "city": "New York",
-  "state": "NY",
-  "postalCode": "10021"
- },
- "phoneNumber": [
-  {
-   "type": "home",
-   "number": "212 555-1234"
-  },
-  {
-   "type": "fax",
-   "number": "646 555-4567"
-  }
- ]
-}
+{"firstName":"John","lastName":"Smith","age":25,"address":{"streetAddress":"21 2nd Street","city":"New York","state":"NY","postalCode":"10021"},"phoneNumber":[{"type":"home","number":"212 555-1234"},{"type":"fax","number":"646 555-4567"}]}
 ```
 
 You can also do,
 
-	$ cat Customer.json | jsonfiddle fmt -c -i
+	$ cat Customer.json | jsonfiddle fmt -c -i -
 
 and the result is the same (and for all other examples using `-i` as well). 
 
 ## Sort fields with `jsonfiddle sort`
+
+### Sort in compact
+
+	$ jsonfiddle sort -c -i test/Customer.json
+
+#### > test/CustomerSC.ref
+```json
+{"address":{"city":"New York","postalCode":"10021","state":"NY","streetAddress":"21 2nd Street"},"age":25,"firstName":"John","lastName":"Smith","phoneNumber":[{"number":"212 555-1234","type":"home"},{"number":"646 555-4567","type":"fax"}]}
+```
 
 ### Sort with pretty print
 
@@ -299,13 +334,47 @@ and the result is the same (and for all other examples using `-i` as well).
 }
 ```
 
-### Sort in compact
+### XML to JSON, sort then pretty print
 
-	$ jsonfiddle sort -c -i test/Customer.json
-
-#### > test/CustomerSC.ref
-```json
-{"address":{"city":"New York","postalCode":"10021","state":"NY","streetAddress":"21 2nd Street"},"age":25,"firstName":"John","lastName":"Smith","phoneNumber":[{"number":"212 555-1234","type":"home"},{"number":"646 555-4567","type":"fax"}]}
+```
+$ jsonfiddle x2j -i test/Books.xml | jsonfiddle sort -i - | jsonfiddle fmt -i -
+XML to JSON
+jsonfiddle v0.5.0. x2j - XML to JSON
+Sort json fields recursively
+Format json string
+{
+ "catalog": {
+  "book": [
+   {
+    "-id": "bk101",
+    "author": "Gambardella, Matthew",
+    "description": "An in-depth look at creating applications \n      with XML.",
+    "genre": "Computer",
+    "price": "44.95",
+    "publish_date": "2000-10-01",
+    "title": "XML Developer's Guide"
+   },
+   {
+    "-id": "bk102",
+    "author": "Ralls, Kim",
+    "description": "A former architect battles corporate zombies, \n      an evil sorceress, and her own childhood to become queen \n      of the world.",
+    "genre": "Fantasy",
+    "price": "5.95",
+    "publish_date": "2000-12-16",
+    "title": "Midnight Rain"
+   },
+   {
+    "-id": "bk103",
+    "author": "Corets, Eva",
+    "description": "After the collapse of a nanotechnology \n      society in England, the young survivors lay the \n      foundation for a new society.",
+    "genre": "Fantasy",
+    "price": "5.95",
+    "publish_date": "2000-11-17",
+    "title": "Maeve Ascendant"
+   }
+  ]
+ }
+}
 ```
 
 ## JSON to struct via `jsonfiddle j2s`
@@ -348,7 +417,7 @@ Thus all the JSON comparison tools I found are failing under such hash request. 
 - The latest binary executables are available under  
 https://github.com/go-jsonfile/jsonfiddle/releases  
 as the result of the Continuous-Integration process.
-- I.e., they are built right from the source code during every git tagging commit automatically by [travis-ci](https://travis-ci.org/).
+- I.e., they are built right from the source code during every git tagging commit automatically.
 - Pick & choose the binary executable that suits your OS and its architecture. E.g., for Linux, it would most probably be the `jsonfiddle_linux_VER_amd64` file. If your OS and its architecture is not available in the download list, please let me know and I'll add it.
 - You may want to rename it to a shorter name instead, e.g., `jsonfiddle`, after downloading it. 
 
@@ -374,6 +443,8 @@ go get github.com/go-jsonfile/jsonfiddle
 ## Similar Projects
 
 All the following similar projects have been considered before writing one on my own instead.
+
+. . . to be filled . . .
 
 ## Author(s) & Contributor(s)
 
