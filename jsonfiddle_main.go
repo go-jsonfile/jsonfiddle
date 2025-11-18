@@ -7,7 +7,7 @@ package main
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017-2023, All rights reserved
+// Authors: Tong Sun (c) 2017-2025, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //go:generate sh jsonfiddle_cliGen.sh
@@ -16,7 +16,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"regexp"
 
@@ -32,8 +31,8 @@ import (
 
 var (
 	progname = "jsonfiddle"
-	version  = "0.5.0"
-	date     = "2023-01-22"
+	version  = "0.6.0"
+	date     = "2025-11-18"
 
 	// Opts store all the configurable options
 	Opts OptsT
@@ -67,14 +66,14 @@ func main() {
 func showVersion() {
 	fmt.Fprintf(os.Stderr, "jsonfiddle - JSON Fiddling, version %s\n", version)
 	fmt.Fprintf(os.Stderr, "Built on %s\n", date)
-	fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+	fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
 	fmt.Fprintf(os.Stderr, "Tool to fiddle with json strings\n")
 	os.Exit(0)
 }
 
 // readJson reads the given json file as []byte.
 func readJson(r io.Reader) []byte {
-	data, err := ioutil.ReadAll(r)
+	data, err := io.ReadAll(r)
 	clis.AbortOn("Reading json input", err)
 
 	if Opts.Protect {

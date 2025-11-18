@@ -29,9 +29,9 @@ The `jsonfiddle` makes it easy to look at the JSON data from different aspects.
 
 ```
 $ jsonfiddle -V
-jsonfiddle - JSON Fiddling, version 0.5.0
-Built on 2023-01-22
-Copyright (C) 2017-2023, Tong Sun
+jsonfiddle - JSON Fiddling, version 0.6.0
+Built on 2025-11-18
+Copyright (C) 2017-2025, Tong Sun
 
 Tool to fiddle with json strings
 ```
@@ -93,20 +93,24 @@ the required flag `-i, --input' was not specified
 Usage:
   jsonfiddle [OPTIONS] fmt [fmt-OPTIONS]
 
+
+
 Application Options:
-  -c, --compact     Compact JSON data, remove all whitespaces
-      --prefix=     prefix for json string output
-  -d, --indent=     indent for json string output (default:  )
-  -p, --protect     protect {{TEMPLATE}} in JSON data
-  -v, --verbose     Verbose mode (Multiple -v options increase the verbosity)
-  -V, --version     Show program version and exit
+  -c, --compact       Compact JSON data, remove all whitespaces
+      --prefix=       prefix for json string output
+  -d, --indent=       indent for json string output (default:  )
+  -p, --protect       protect {{TEMPLATE}} in JSON data
+  -v, --verbose       Verbose mode (Multiple -v options increase the verbosity)
+  -V, --version       Show program version and exit
 
 Help Options:
-  -h, --help        Show this help message
+  -h, --help          Show this help message
 
 [fmt command options]
-      -i, --input=  the source to get json string from (mandatory)
-      -o, --output= the output, default to stdout (default: -)
+      -i, --input=    the source to get json string from (mandatory)
+      -o, --output=   the output, default to stdout (default: -)
+      -s, --concise   Compact the top level array into concise array style
+      -u, --unescape  Unescape unicode of form < to their literal characters
 ```
 
 ### $ jsonfiddle sort || true
@@ -338,10 +342,10 @@ and the result is the same (and for all other examples using `-i` as well).
 
 ```
 $ jsonfiddle x2j -i test/Books.xml | jsonfiddle sort -i - | jsonfiddle fmt -i -
-XML to JSON
-jsonfiddle v0.5.0. x2j - XML to JSON
-Sort json fields recursively
 Format json string
+XML to JSON
+jsonfiddle v0.6.0. x2j - XML to JSON
+Sort json fields recursively
 {
  "catalog": {
   "book": [
