@@ -1,15 +1,12 @@
 name: build
 
-env:
-  GO111MODULE: off
-
 on:
   push:
     branches:
       - 'master'
     tags:
       - 'v*'
-
+  pull_request:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -18,37 +15,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.17
-
-      -
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      -
+        name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.1
+
+      -
+        name: Cache Go modules
+        uses: actions/cache@v4
+        # Do before go get
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
 
       -
         name: Tests
         run: |
-          export GOPATH=/home/runner/go
-          mkdir -vp $GOPATH/src/github.com/$GITHUB_REPOSITORY
-          rmdir -v $GOPATH/src/github.com/$GITHUB_REPOSITORY
-          mv -v $GITHUB_WORKSPACE $GOPATH/src/github.com/$GITHUB_REPOSITORY
-          ln -vs $GOPATH/src/github.com/$GITHUB_REPOSITORY $GITHUB_WORKSPACE
-          # go mod tidy
-          go get -v ./...
-          go build -v
+          go mod tidy
+          go build -v -trimpath
           go test -v ./...
+          # for the next GoReleaser step
+          git restore go.mod go.sum
 
       -
         name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2
+        uses: goreleaser/goreleaser-action@v5
         if: success() && startsWith(github.ref, 'refs/tags/')
         with:
           version: latest
-          args: release --rm-dist
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

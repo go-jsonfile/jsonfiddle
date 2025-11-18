@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	cmdTest = "jsonfiddle"
+	cmdTest = "../jsonfiddle"
 	dirTest = "test/"
 	extRef  = ".ref" // extension for reference file
 	extGot  = ".got" // extension for generated file
