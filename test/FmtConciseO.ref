@@ -1,0 +1,5 @@
+{ "users": [
+    {"active":true,"id":1},
+    {"active":false,"id":2}
+  ]
+}

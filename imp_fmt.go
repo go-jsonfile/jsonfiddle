@@ -28,7 +28,11 @@ func (x *FmtCommand) Exec(args []string) error {
 
 	var out bytes.Buffer
 	var err error
-	if Opts.Compact {
+	if x.Concise {
+		var formatted string
+		formatted, err = FormatJSONMixed(data)
+		out.WriteString(formatted)
+	} else if Opts.Compact {
 		err = json.Compact(&out, data)
 	} else {
 		err = json.Indent(&out, data, Opts.Prefix, Opts.Indent)

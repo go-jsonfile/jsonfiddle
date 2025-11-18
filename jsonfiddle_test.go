@@ -68,6 +68,8 @@ func TestExec(t *testing.T) {
 	testIt(t, "Schedules", "fmt", "-i", "Schedules.json")
 	testIt(t, "CustomerP", "fmt", "-p", "-i", "CustomerP.json")
 	testIt(t, "CustomerPC", "fmt", "-c", "-p", "-i", "CustomerP.json")
+	testIt(t, "FmtConciseO", "fmt", "-s", "-i", "FmtConciseO.json")
+	testIt(t, "FmtConciseA", "fmt", "--concise", "-i", "FmtConciseA.json")
 	// -- sort
 	t.Logf("\n\n== Testing Basic sort Functions\n\n")
 	testIt(t, "CustomerSI", "sort", "-i", "Customer.json")
