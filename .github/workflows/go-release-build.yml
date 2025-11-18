@@ -42,7 +42,7 @@ jobs:
           go build -v -trimpath
           go test -v ./...
           # for the next GoReleaser step
-          git restore go.mod go.sum
+          # X: git restore go.mod go.sum
 
       -
         name: Run GoReleaser
