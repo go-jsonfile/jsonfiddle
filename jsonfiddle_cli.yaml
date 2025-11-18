@@ -75,6 +75,11 @@ Command:
         Value: "-"
         Usage: 'the output, default to stdout'
 
+      - Name: Unescape
+        Type: bool
+        Flag: 'u,unescape'
+        Usage: "Unescape unicode of form \\u003c to their literal characters"
+
   - Name: sort
     Desc: "Sort json fields recursively"
     Text: ''

@@ -20,8 +20,9 @@ import (
 
 // The FmtCommand type defines all the configurable options from cli.
 type FmtCommand struct {
-	Filei string `short:"i" long:"input" description:"the source to get json string from (mandatory)" required:"true"`
-	Fileo string `short:"o" long:"output" description:"the output, default to stdout" default:"-"`
+	Filei    string `short:"i" long:"input" description:"the source to get json string from (mandatory)" required:"true"`
+	Fileo    string `short:"o" long:"output" description:"the output, default to stdout" default:"-"`
+	Unescape bool   `short:"u" long:"unescape" description:"Unescape unicode of form \u003c to their literal characters"`
 }
 
 var fmtCommand FmtCommand

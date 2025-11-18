@@ -7,7 +7,7 @@ package main
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017-2023, All rights reserved
+// Authors: Tong Sun (c) 2017-2025, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 import (
@@ -28,7 +28,7 @@ import (
 //  var (
 //          progname  = "jsonfiddle"
 //          version   = "0.1.0"
-//          date = "2023-01-23"
+//          date = "2025-01-15"
 
 //  	// opts store all the configurable options
 //  	opts optsT
@@ -62,7 +62,7 @@ import (
 //  func showVersion() {
 //   	fmt.Fprintf(os.Stderr, "jsonfiddle - JSON Fiddling, version %s\n", version)
 //  	fmt.Fprintf(os.Stderr, "Built on %s\n", date)
-//   	fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
 //  	fmt.Fprintf(os.Stderr, "Tool to fiddle with json strings\n")
 //  	os.Exit(0)
 //  }
@@ -92,7 +92,7 @@ type optsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017-2023, All rights reserved
+// Authors: Tong Sun (c) 2017-2025, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //  package main
@@ -130,7 +130,7 @@ type optsT struct {
 //
 //  func (x *EscCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Escape json string\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::esc", opts.Verbose)
 //   	clis.Verbose(1, "Doing Esc, with %+v, %+v", opts, args)
 //   	// fmt.Println(x.Filei, x.Fileo)
@@ -151,7 +151,7 @@ type optsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017-2023, All rights reserved
+// Authors: Tong Sun (c) 2017-2025, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //  package main
@@ -172,6 +172,7 @@ type optsT struct {
 //  type FmtCommand struct {
 //  	Filei	string	`short:"i" long:"input" description:"the source to get json string from (mandatory)" required:"true"`
 //  	Fileo	string	`short:"o" long:"output" description:"the output, default to stdout" default:"-"`
+//  	Unescape	bool	`short:"u" long:"unescape" description:"Unescape unicode of form \u003c to their literal characters"`
 //  }
 
 //
@@ -189,10 +190,10 @@ type optsT struct {
 //
 //  func (x *FmtCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Format json string\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::fmt", opts.Verbose)
 //   	clis.Verbose(1, "Doing Fmt, with %+v, %+v", opts, args)
-//   	// fmt.Println(x.Filei, x.Fileo)
+//   	// fmt.Println(x.Filei, x.Fileo, x.Unescape)
 //  	return x.Exec(args)
 //  }
 //
@@ -210,7 +211,7 @@ type optsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017-2023, All rights reserved
+// Authors: Tong Sun (c) 2017-2025, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //  package main
@@ -248,7 +249,7 @@ type optsT struct {
 //
 //  func (x *SortCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Sort json fields recursively\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::sort", opts.Verbose)
 //   	clis.Verbose(1, "Doing Sort, with %+v, %+v", opts, args)
 //   	// fmt.Println(x.Filei, x.Fileo)
@@ -269,7 +270,7 @@ type optsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017-2023, All rights reserved
+// Authors: Tong Sun (c) 2017-2025, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //  package main
@@ -311,7 +312,7 @@ type optsT struct {
 //
 //  func (x *J2sCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "JSON to struct\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::j2s", opts.Verbose)
 //   	clis.Verbose(1, "Doing J2s, with %+v, %+v", opts, args)
 //   	// fmt.Println(x.FmtType, x.Filei, x.Fileo, x.Name, x.Pkg, x.SubStruct)
@@ -332,7 +333,7 @@ type optsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: jsonfiddle
 // Purpose: JSON Fiddling
-// Authors: Tong Sun (c) 2017-2023, All rights reserved
+// Authors: Tong Sun (c) 2017-2025, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //  package main
@@ -370,7 +371,7 @@ type optsT struct {
 //
 //  func (x *X2jCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "XML to JSON\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
 //   	clis.Setup("jsonfiddle::x2j", opts.Verbose)
 //   	clis.Verbose(1, "Doing X2j, with %+v, %+v", opts, args)
 //   	// fmt.Println(x.Filei, x.Fileo)

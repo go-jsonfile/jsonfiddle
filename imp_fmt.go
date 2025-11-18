@@ -10,6 +10,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"regexp"
+	"strconv"
 
 	"github.com/go-easygen/go-flags/clis"
 )
@@ -20,6 +22,9 @@ func (x *FmtCommand) Exec(args []string) error {
 	fileI := clis.GetInputStream(x.Filei)
 	defer fileI.Close()
 	data := readJson(fileI)
+	if x.Unescape {
+		data = unescapeUnicode(data)
+	}
 
 	var out bytes.Buffer
 	var err error
@@ -34,4 +39,17 @@ func (x *FmtCommand) Exec(args []string) error {
 	out.WriteTo(fileO)
 	fmt.Fprintln(fileO)
 	return nil
+}
+
+func unescapeUnicode(b []byte) []byte {
+	// Unescape Unicode escape sequences like \u003c to actual characters
+	re := regexp.MustCompile(`\\u[0-9a-fA-F]{4}`)
+	return re.ReplaceAllFunc(b, func(match []byte) []byte {
+		// Convert \uXXXX to actual character
+		r, err := strconv.ParseInt(string(match[2:]), 16, 32)
+		if err != nil {
+			return match
+		}
+		return []byte(string(rune(r)))
+	})
 }
