@@ -41,8 +41,6 @@ jobs:
           go mod tidy
           go build -v -trimpath
           go test -v ./...
-          # for the next GoReleaser step
-          # X: git restore go.mod go.sum
 
       -
         name: Run GoReleaser
