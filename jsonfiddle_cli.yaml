@@ -1,3 +1,5 @@
+# GoFlags based cli def file
+
 # program name, name for the executable
 ProgramName: jsonfiddle
 Authors: Tong Sun
@@ -74,6 +76,11 @@ Command:
         Flag: o,output
         Value: "-"
         Usage: 'the output, default to stdout'
+
+      - Name: Concise
+        Type: bool
+        Flag: 's,concise'
+        Usage: "Compact the top level array into concise array style"
 
       - Name: Unescape
         Type: bool

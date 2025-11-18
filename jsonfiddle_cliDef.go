@@ -19,6 +19,9 @@ import (
 
 // Template for main starts here
 
+//  // for `go generate -x`
+//  //go:generate sh jsonfiddle_cliGen.sh
+
 //////////////////////////////////////////////////////////////////////////
 // Constant and data type/structure definitions
 
@@ -28,13 +31,13 @@ import (
 //  var (
 //          progname  = "jsonfiddle"
 //          version   = "0.1.0"
-//          date = "2025-01-15"
+//          date = "2025-11-18"
 
-//  	// opts store all the configurable options
-//  	opts optsT
+//  	// Opts store all the configurable options
+//  	Opts OptsT
 //  )
 //
-//  var gfParser = flags.NewParser(&opts, flags.Default)
+//  var gfParser = flags.NewParser(&Opts, flags.Default)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
@@ -42,9 +45,9 @@ import (
 //==========================================================================
 // Function main
 //  func main() {
-//  	opts.Version = showVersion
-//  	opts.Verbflg = func() {
-//  		opts.Verbose++
+//  	Opts.Version = showVersion
+//  	Opts.Verbflg = func() {
+//  		Opts.Verbose++
 //  	}
 //
 //  	if _, err := gfParser.Parse(); err != nil {
@@ -75,8 +78,8 @@ import (
 
 // Template for type define starts here
 
-// The optsT type defines all the configurable options from cli.
-type optsT struct {
+// The OptsT type defines all the configurable options from cli.
+type OptsT struct {
 	Compact bool   `short:"c" long:"compact" description:"Compact JSON data, remove all whitespaces"`
 	Prefix  string `long:"prefix" description:"prefix for json string output"`
 	Indent  string `short:"d" long:"indent" description:"indent for json string output" default:" "`
@@ -124,15 +127,16 @@ type optsT struct {
 //  func init() {
 //  	gfParser.AddCommand("esc",
 //  		"Escape json string",
-//  		"",
+//  		`
+//  `,
 //  		&escCommand)
 //  }
 //
 //  func (x *EscCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Escape json string\n")
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
-//   	clis.Setup("jsonfiddle::esc", opts.Verbose)
-//   	clis.Verbose(1, "Doing Esc, with %+v, %+v", opts, args)
+//   	clis.Setup("jsonfiddle::esc", Opts.Verbose)
+//   	clis.Verbose(1, "Doing Esc, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.Filei, x.Fileo)
 //  	return x.Exec(args)
 //  }
@@ -172,6 +176,7 @@ type optsT struct {
 //  type FmtCommand struct {
 //  	Filei	string	`short:"i" long:"input" description:"the source to get json string from (mandatory)" required:"true"`
 //  	Fileo	string	`short:"o" long:"output" description:"the output, default to stdout" default:"-"`
+//  	Concise	bool	`short:"s" long:"concise" description:"Compact the top level array into concise array style"`
 //  	Unescape	bool	`short:"u" long:"unescape" description:"Unescape unicode of form \u003c to their literal characters"`
 //  }
 
@@ -184,16 +189,17 @@ type optsT struct {
 //  func init() {
 //  	gfParser.AddCommand("fmt",
 //  		"Format json string",
-//  		"",
+//  		`
+//  `,
 //  		&fmtCommand)
 //  }
 //
 //  func (x *FmtCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Format json string\n")
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
-//   	clis.Setup("jsonfiddle::fmt", opts.Verbose)
-//   	clis.Verbose(1, "Doing Fmt, with %+v, %+v", opts, args)
-//   	// fmt.Println(x.Filei, x.Fileo, x.Unescape)
+//   	clis.Setup("jsonfiddle::fmt", Opts.Verbose)
+//   	clis.Verbose(1, "Doing Fmt, with %+v, %+v", Opts, args)
+//   	// fmt.Println(x.Filei, x.Fileo, x.Concise, x.Unescape)
 //  	return x.Exec(args)
 //  }
 //
@@ -243,15 +249,16 @@ type optsT struct {
 //  func init() {
 //  	gfParser.AddCommand("sort",
 //  		"Sort json fields recursively",
-//  		"",
+//  		`
+//  `,
 //  		&sortCommand)
 //  }
 //
 //  func (x *SortCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Sort json fields recursively\n")
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
-//   	clis.Setup("jsonfiddle::sort", opts.Verbose)
-//   	clis.Verbose(1, "Doing Sort, with %+v, %+v", opts, args)
+//   	clis.Setup("jsonfiddle::sort", Opts.Verbose)
+//   	clis.Verbose(1, "Doing Sort, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.Filei, x.Fileo)
 //  	return x.Exec(args)
 //  }
@@ -306,15 +313,16 @@ type optsT struct {
 //  func init() {
 //  	gfParser.AddCommand("j2s",
 //  		"JSON to struct",
-//  		"JSON convert to Go struct",
+//  		`JSON convert to Go struct
+//  `,
 //  		&j2sCommand)
 //  }
 //
 //  func (x *J2sCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "JSON to struct\n")
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
-//   	clis.Setup("jsonfiddle::j2s", opts.Verbose)
-//   	clis.Verbose(1, "Doing J2s, with %+v, %+v", opts, args)
+//   	clis.Setup("jsonfiddle::j2s", Opts.Verbose)
+//   	clis.Verbose(1, "Doing J2s, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.FmtType, x.Filei, x.Fileo, x.Name, x.Pkg, x.SubStruct)
 //  	return x.Exec(args)
 //  }
@@ -365,15 +373,16 @@ type optsT struct {
 //  func init() {
 //  	gfParser.AddCommand("x2j",
 //  		"XML to JSON",
-//  		"",
+//  		`
+//  `,
 //  		&x2jCommand)
 //  }
 //
 //  func (x *X2jCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "XML to JSON\n")
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2025, Tong Sun\n\n")
-//   	clis.Setup("jsonfiddle::x2j", opts.Verbose)
-//   	clis.Verbose(1, "Doing X2j, with %+v, %+v", opts, args)
+//   	clis.Setup("jsonfiddle::x2j", Opts.Verbose)
+//   	clis.Verbose(1, "Doing X2j, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.Filei, x.Fileo)
 //  	return x.Exec(args)
 //  }

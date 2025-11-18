@@ -43,8 +43,8 @@ func init() {
 func (x *J2sCommand) Execute(args []string) error {
 	fmt.Fprintf(os.Stderr, "JSON to struct\n")
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
-	clis.Setup("jsonfiddle::j2s", opts.Verbose)
-	clis.Verbose(1, "Doing J2s, with %+v, %+v", opts, args)
+	clis.Setup("jsonfiddle::j2s", Opts.Verbose)
+	clis.Verbose(1, "Doing J2s, with %+v, %+v", Opts, args)
 	// fmt.Println(x.FmtType, x.Filei, x.Fileo, x.Name, x.Pkg, x.SubStruct)
 	return x.Exec(args)
 }

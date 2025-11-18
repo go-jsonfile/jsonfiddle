@@ -39,8 +39,8 @@ func init() {
 func (x *SortCommand) Execute(args []string) error {
 	fmt.Fprintf(os.Stderr, "Sort json fields recursively\n")
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
-	clis.Setup("jsonfiddle::sort", opts.Verbose)
-	clis.Verbose(1, "Doing Sort, with %+v, %+v", opts, args)
+	clis.Setup("jsonfiddle::sort", Opts.Verbose)
+	clis.Verbose(1, "Doing Sort, with %+v, %+v", Opts, args)
 	// fmt.Println(x.Filei, x.Fileo)
 	return x.Exec(args)
 }

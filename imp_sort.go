@@ -34,10 +34,10 @@ func cmdSort(r io.Reader, w io.Writer) error {
 	json.Unmarshal(content, &res)
 	var js []byte
 	var err error
-	if opts.Compact {
+	if Opts.Compact {
 		js, err = json.Marshal(res)
 	} else {
-		js, err = json.MarshalIndent(res, opts.Prefix, opts.Indent)
+		js, err = json.MarshalIndent(res, Opts.Prefix, Opts.Indent)
 	}
 	clis.AbortOn("[::sort] Marshaling input", err)
 	fmt.Fprintln(w, string(js))

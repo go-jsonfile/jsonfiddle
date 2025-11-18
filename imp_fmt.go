@@ -28,10 +28,10 @@ func (x *FmtCommand) Exec(args []string) error {
 
 	var out bytes.Buffer
 	var err error
-	if opts.Compact {
+	if Opts.Compact {
 		err = json.Compact(&out, data)
 	} else {
-		err = json.Indent(&out, data, opts.Prefix, opts.Indent)
+		err = json.Indent(&out, data, Opts.Prefix, Opts.Indent)
 	}
 	clis.AbortOn("Formatting input", err)
 	fileO := clis.GetOutputStream(x.Fileo)

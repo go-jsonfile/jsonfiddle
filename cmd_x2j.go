@@ -39,8 +39,8 @@ func init() {
 func (x *X2jCommand) Execute(args []string) error {
 	fmt.Fprintf(os.Stderr, "XML to JSON\n")
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
-	clis.Setup("jsonfiddle::x2j", opts.Verbose)
-	clis.Verbose(1, "Doing X2j, with %+v, %+v", opts, args)
+	clis.Setup("jsonfiddle::x2j", Opts.Verbose)
+	clis.Verbose(1, "Doing X2j, with %+v, %+v", Opts, args)
 	// fmt.Println(x.Filei, x.Fileo)
 	return x.Exec(args)
 }

@@ -35,21 +35,21 @@ var (
 	version  = "0.5.0"
 	date     = "2023-01-22"
 
-	// opts store all the configurable options
-	opts optsT
+	// Opts store all the configurable options
+	Opts OptsT
 )
 
-var gfParser = flags.NewParser(&opts, flags.Default)
+var gfParser = flags.NewParser(&Opts, flags.Default)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
 
-//==========================================================================
+// ==========================================================================
 // Function main
 func main() {
-	opts.Version = showVersion
-	opts.Verbflg = func() {
-		opts.Verbose++
+	Opts.Version = showVersion
+	Opts.Verbflg = func() {
+		Opts.Verbose++
 	}
 
 	if _, err := gfParser.Parse(); err != nil {
@@ -77,7 +77,7 @@ func readJson(r io.Reader) []byte {
 	data, err := ioutil.ReadAll(r)
 	clis.AbortOn("Reading json input", err)
 
-	if opts.Protect {
+	if Opts.Protect {
 		data = regexp.MustCompile(`({{)([^ }]+)(}})`).
 			ReplaceAll(data, []byte(`<<${2}>>`))
 		// "age":<<C_age>> => "age":"<<C_age>>"

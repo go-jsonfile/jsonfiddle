@@ -39,8 +39,8 @@ func init() {
 func (x *EscCommand) Execute(args []string) error {
 	fmt.Fprintf(os.Stderr, "Escape json string\n")
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2017-2023, Tong Sun\n\n")
-	clis.Setup("jsonfiddle::esc", opts.Verbose)
-	clis.Verbose(1, "Doing Esc, with %+v, %+v", opts, args)
+	clis.Setup("jsonfiddle::esc", Opts.Verbose)
+	clis.Verbose(1, "Doing Esc, with %+v, %+v", Opts, args)
 	// fmt.Println(x.Filei, x.Fileo)
 	return x.Exec(args)
 }
