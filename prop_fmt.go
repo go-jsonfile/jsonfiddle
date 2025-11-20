@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"strings"
 )
 
@@ -121,5 +122,6 @@ func formatArrayElements(sb *strings.Builder, elements []interface{}, indentSpac
 		}
 		sb.WriteString("\n")
 	}
+	log.Println(numElements, "elements.")
 	return nil
 }
